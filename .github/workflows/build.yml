@@ -34,12 +34,6 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: './dist'
-    
-    - name: Upload Android APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: android-apk
-        path: android/app/build/outputs/apk/release/app-release.apk
 
   deploy-static-site:
     environment:
@@ -53,7 +47,4 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: dist 
-    
         
