@@ -2,13 +2,19 @@ import { Pressable, StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
+import { useEnvironment } from '@/src/hooks/useEnvironment';
 import { router } from 'expo-router';
 
 
 export const DebugScreen = () => {
+
+  const env = useEnvironment();
   
   return (
     <ThemedView style={styles.container}>
+
+      <ThemedText type="title">Environment</ThemedText>
+      <ThemedText type="default">{JSON.stringify(env, null, 2)}</ThemedText>
 
       <Pressable
         onPress={() => router.push('/(tabs)/home')}
