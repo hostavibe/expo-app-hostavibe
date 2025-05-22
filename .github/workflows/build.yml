@@ -1,5 +1,9 @@
 name: Build Expo App
 
+env:
+  # Setting an environment variable with the value of a configuration variable
+  env_var: ${{ vars.ENV_CONTEXT_VAR }}
+  
 on:
   push:
     branches: [ main ]
