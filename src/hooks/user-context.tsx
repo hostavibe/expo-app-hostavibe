@@ -1,8 +1,10 @@
 import { useEnvironment } from '@/src/hooks/useEnvironment';
 import { useAuth } from '@clerk/clerk-expo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import * as React from 'react';
 import { createContext, useContext } from 'react';
+import 'react-native-url-polyfill/auto';
 
 
 type UserContextType = {
@@ -18,8 +20,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { getToken, isLoaded } = useAuth();
   const env = useEnvironment();
   
-  const supabaseUrl = env.supabaseUrl
-  const supabaseAnonKey = env.supabaseAnonKey
+  const supabaseUrl = env.supabaseUrl;
+  const supabaseAnonKey = env.supabaseAnonKey;
 
   const supabase = createClient(
     supabaseUrl,
@@ -29,7 +31,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         return await getToken();
       },
       auth: {
-        // storage: AsyncStorage,
+        storage: AsyncStorage,
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: false,

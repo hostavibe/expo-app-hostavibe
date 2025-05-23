@@ -26,6 +26,11 @@ export const ALL_TABS: TabData[] = [
     icon: 'house.fill',
   },
   {
+    name: 'my-posts',
+    title: 'My Posts',
+    icon: 'photo.fill',
+  },
+  {
     name: 'debug',
     title: 'Debug',
     icon: 'photo.fill',
