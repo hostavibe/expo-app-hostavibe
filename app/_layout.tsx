@@ -11,7 +11,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider tokenCache={tokenCache}>
+    <ClerkProvider tokenCache={tokenCache} publishableKey={clerkPublishableKey}>
       <UserProvider>
         <Slot />
       </UserProvider>
