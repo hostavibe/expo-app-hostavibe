@@ -1,47 +1,8 @@
 import { MobileLayout } from '@/src/components/layout/MobileLayout';
 import { NonMobileLayout } from '@/src/components/layout/NonMobileLayout';
-import { IconSymbolName } from '@/src/components/ui/IconSymbol';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
-import { ColorSchemeName, useWindowDimensions } from 'react-native';
-
-
-export interface TabData {
-  name: string;
-  title: string;
-  icon: IconSymbolName;
-}
-
-
-export interface RootLayoutProps {
-  colorScheme: ColorSchemeName;
-  isMobile: boolean;
-  width: number;
-  visibleTabs: TabData[];
-}
-
-export const ALL_TABS: TabData[] = [
-  {
-    name: 'home',
-    title: 'Home',
-    icon: 'house.fill',
-  },
-  {
-    name: 'my-posts',
-    title: 'My Posts',
-    icon: 'photo.fill',
-  },
-  {
-    name: 'debug',
-    title: 'Debug',
-    icon: 'photo.fill',
-  },
-  {
-    name: 'profile',
-    title: 'Profile',
-    icon: 'person.fill',
-  },
-] as const;
-
+import { ALL_TABS, RootLayoutProps } from '@/src/types/layout';
+import { useWindowDimensions } from 'react-native';
 
 export const TabLayout = () => {
   const colorScheme = useColorScheme();

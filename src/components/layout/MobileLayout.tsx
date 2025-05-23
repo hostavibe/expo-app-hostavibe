@@ -1,7 +1,7 @@
-import { ALL_TABS, RootLayoutProps } from "@/app/(tabs)/_layout";
 import { IconSymbol } from "@/src/components/ui/IconSymbol";
 import TabBarBackground from "@/src/components/ui/TabBarBackground";
 import { Colors } from "@/src/constants/Colors";
+import { ALL_TABS, RootLayoutProps } from "@/src/types/layout";
 import { Tabs } from "expo-router";
 import { Platform, ViewStyle } from "react-native";
 

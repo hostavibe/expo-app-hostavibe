@@ -17,8 +17,8 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
   name: 'expo-app-hostavibe',
   slug: 'expo-app-hostavibe',
   extra: {
-    supabaseUrl: process.env.SUPABASE_URL,
-    supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
+    supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
     clerkExpoPublishableKey: process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY,
   },
 });
