@@ -5,9 +5,9 @@ import path from 'path';
 // Load environment variables
 config(); // Load .env
 
-const envName = process.env.ENV_NAME;
-console.log("envName", envName);
-const envPath = path.resolve(process.cwd(), `.env.${envName}`);
+const envFile = process.env.ENV_FILE;
+console.log("envFile", envFile);
+const envPath = path.resolve(process.cwd(), `.env.${envFile}`);
 console.log("envPath", envPath);
 
 config({ path: envPath, override: true });
@@ -24,8 +24,8 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
 });
 
 console.log("AppConfig", AppConfig);
-console.log("SUPABASE_URL", process.env.SUPABASE_URL);
-console.log("SUPABASE_ANON_KEY", process.env.SUPABASE_ANON_KEY);
+console.log("EXPO_PUBLIC_SUPABASE_URL", process.env.EXPO_PUBLIC_SUPABASE_URL);
+console.log("EXPO_PUBLIC_SUPABASE_ANON_KEY", process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY);
 console.log("EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY", process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 export default AppConfig;
