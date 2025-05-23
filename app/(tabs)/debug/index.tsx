@@ -16,9 +16,8 @@ export const DebugScreen = () => {
       <ThemedText type="title">Environment</ThemedText>
 
       <ThemedText type="default">{JSON.stringify(env, null, 2)}</ThemedText>
-      <ThemedText type="default">ENV_NAME: {process.env.ENV_NAME}</ThemedText>
+      <ThemedText type="default">EXPO_PUBLIC_ENV_NAME: {process.env.EXPO_PUBLIC_ENV_NAME}</ThemedText>
       <br />
-      <ThemedText type="default">ENV_FILE: {process.env.ENV_FILE}</ThemedText>
     
       <ThemedText type="title">Constants</ThemedText>
       <ThemedText type="default">EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY: {process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}</ThemedText>

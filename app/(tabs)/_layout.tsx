@@ -30,6 +30,11 @@ export const ALL_TABS: TabData[] = [
     title: 'Debug',
     icon: 'photo.fill',
   },
+  {
+    name: 'profile',
+    title: 'Profile',
+    icon: 'person.fill',
+  },
 ] as const;
 
 

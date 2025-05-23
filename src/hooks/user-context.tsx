@@ -21,8 +21,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const supabaseUrl = env.supabaseUrl
   const supabaseAnonKey = env.supabaseAnonKey
 
-  console.log("ENV", env)
-
   const supabase = createClient(
     supabaseUrl,
     supabaseAnonKey,
