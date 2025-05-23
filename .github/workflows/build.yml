@@ -34,8 +34,8 @@ jobs:
       run: |
         cat << EOF > .env
         EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ vars.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-        EXPO_PUBLIC_SUPABASE_URL=${{ vars.SUPABASE_URL }}
-        EXPO_PUBLIC_SUPABASE_ANON_KEY=${{ vars.SUPABASE_ANON_KEY }}
+        EXPO_PUBLIC_SUPABASE_URL=${{ vars.EXPO_PUBLIC_SUPABASE_URL }}
+        EXPO_PUBLIC_SUPABASE_ANON_KEY=${{ vars.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
         EOF
         
     - name: Build All - Dev
