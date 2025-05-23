@@ -7,7 +7,7 @@ config(); // Load .env
 
 const envFile = process.env.ENV_FILE;
 console.log("envFile", envFile);
-const envPath = path.resolve(process.cwd(), `.env.${envFile}`);
+const envPath = path.resolve(process.cwd(), `.${envFile}`);
 console.log("envPath", envPath);
 
 config({ path: envPath, override: true });

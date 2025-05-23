@@ -10,7 +10,7 @@ export const HomeScreen = () => {
 
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
-  // const [showScanner, setShowScanner] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
   const [scannedData, setScannedData] = useState<string | null>(null);
 
   
@@ -33,12 +33,12 @@ export const HomeScreen = () => {
     <ThemedView style={styles.container}>
 
       <ThemedView style={styles.scannerContainer}>
-        {/* <TouchableOpacity 
+        <TouchableOpacity 
           style={styles.scanButton}
           onPress={() => setShowScanner(true)}
         >
           <ThemedText style={styles.scanButtonText}>Scan to Post</ThemedText>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         {scannedData && (
           <ThemedView style={styles.scannedDataContainer}>
@@ -57,7 +57,7 @@ export const HomeScreen = () => {
           </ThemedView>
         )}
 
-        {/* {showScanner && ( */}
+        {showScanner && (
           <View style={styles.cameraContainer}>
             <CameraView 
               style={styles.camera}
@@ -72,7 +72,7 @@ export const HomeScreen = () => {
                 <TouchableOpacity
                   style={styles.closeButton}
                   onPress={() => {
-                    // setShowScanner(false);
+                    setShowScanner(false);
                     setScanned(false);
                   }}
                 >
@@ -81,7 +81,7 @@ export const HomeScreen = () => {
               </View>
             </CameraView>
           </View>
-        {/* )} */}
+        )}
       </ThemedView>
     </ThemedView>
   );
