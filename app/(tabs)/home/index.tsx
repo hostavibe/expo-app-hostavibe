@@ -11,6 +11,13 @@ export const HomeScreen = () => {
     <ThemedView style={styles.container}>
 
       <title>abc</title>
+      
+      <Pressable
+        onPress={() => router.push('/home/scan-to-post')}
+        style={styles.scanButton}
+      >
+        <ThemedText type="title">Scan to Post</ThemedText>
+      </Pressable>
       <Pressable
         onPress={() => router.push('/(tabs)/debug')}
         style={styles.scanButton}
