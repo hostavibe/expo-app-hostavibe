@@ -16,6 +16,20 @@ export const DebugScreen = () => {
       <ThemedText type="title">Environment</ThemedText>
       <ThemedText type="default">{JSON.stringify(env, null, 2)}</ThemedText>
 
+      <ThemedText type="title">Constants</ThemedText>
+      <ThemedText type="default">EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY: {process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}</ThemedText>
+      <br />
+      <ThemedText type="default">SUPABASE_URL: {process.env.SUPABASE_URL}</ThemedText>
+      <br />
+      <ThemedText type="default">SUPABASE_ANON_KEY: {process.env.SUPABASE_ANON_KEY}</ThemedText>
+      <br />
+
+      <ThemedText type="default">EXPO_PUBLIC_SUPABASE_URL: {process.env.EXPO_PUBLIC_SUPABASE_URL}</ThemedText>
+      <br />
+      <ThemedText type="default">EXPO_PUBLIC_SUPABASE_ANON_KEY: {process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY}</ThemedText>
+      <br />
+      
+
       <Pressable
         onPress={() => router.push('/(tabs)/home')}
         style={styles.scanButton}

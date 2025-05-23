@@ -1,6 +1,3 @@
-// hooks/useEnvironment.ts
-import Constants from 'expo-constants';
-
 
 interface Environment {
   clerkExpoPublishableKey: string;
@@ -11,10 +8,14 @@ interface Environment {
 
 export const useEnvironment = (): Environment => {
 
-  console.log("Constants.expoConfig", Constants.expoConfig)
+  const clerkExpoPublishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
   const envVariables = {
-    ...Constants.expoConfig?.extra
+    clerkExpoPublishableKey,
+    supabaseUrl,
+    supabaseAnonKey,
   } as Environment;
 
   console.log("envVariables", envVariables)
