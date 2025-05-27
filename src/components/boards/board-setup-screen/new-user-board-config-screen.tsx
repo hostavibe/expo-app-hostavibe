@@ -1,43 +1,29 @@
-import { ThemedText } from '@/src/components/ThemedText';
-import { ThemedView } from '@/src/components/ThemedView';
-import { useUserContext } from '@/src/hooks/user-context';
-import { BoardSetupDbRowNew } from '@/src/zod-types/boards/board-setup-db-row';
-import { BOARD_TYPE_SINGLE_SCREEN } from '@/src/zod-types/boards/board-types/fzb-board-single-screen';
-import { useUser as useClerkUser } from '@clerk/clerk-expo';
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { addUserBoardConfiguration } from "@/src/api/supabase-db/boards4users-configurations";
+import { useUserContext } from "@/src/hooks/user-context";
+import { BOARD_TYPE_SINGLE_SCREEN } from "@/src/zod-types/boards/board-types/fzb-board-single-screen";
+import { UserBoardSetupDbRowNew } from "@/src/zod-types/boards/user-board-setup-db-row";
+import { router } from "expo-router";
+import { useState } from "react";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { ThemedText } from "../../ThemedText";
+import { ThemedView } from "../../ThemedView";
 
-export const NewBoardSetupScreen = () => {
-  const router = useRouter();
-  const { supabase } = useUserContext();
-  const { user } = useClerkUser();
+
+interface NewUserBoardConfigScreenProps {
+  userId: string;
+}
+
+export const NewUserBoardConfigScreen = ({ userId }: NewUserBoardConfigScreenProps) => {
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const clerk_user_org_id = user?.organizationMemberships[0].organization.id;
+  const { supabase } = useUserContext();
 
-  if (!user) {
-    return <ThemedText>User not found</ThemedText>;
-  }
-
-  if (!clerk_user_org_id) {
-    return <ThemedText>Organization not found</ThemedText>;
-  }
 
   async function handleSubmit() {
-
-    if (!user) {
-      setError('User not found');
-      return;
-    }
-
-    if (!clerk_user_org_id) {
-      setError('Organization not found');
-      return;
-    }
 
     if (!name.trim()) {
       setError('Name is required');
@@ -47,14 +33,7 @@ export const NewBoardSetupScreen = () => {
     setIsSubmitting(true);
     setError(null);
 
-    // const newBoardConfig: FzbBoardTypes = {
-    //   boardType: BOARD_TYPE_SINGLE_SCREEN,
-    //   screenConfig: {
-    //     screenType: 'show-permanent-blank',
-    //   },
-    // };
-
-    const newBoardConfig: BoardSetupDbRowNew = {
+    const newBoardConfig: UserBoardSetupDbRowNew = {
       name: name.trim(),
       description: description.trim(),
 
@@ -65,26 +44,17 @@ export const NewBoardSetupScreen = () => {
         },
       },
 
-      clerk_user_id: user.id,
-      clerk_org_id: clerk_user_org_id,
+      clerk_user_id: userId,
 
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
 
     try {
-      const { error: insertError } = await supabase
-        .from('board_configurations')
-        .insert(newBoardConfig);
-        // .insert({
-        //   name: name.trim(),
-        //   description: description.trim(),
-        //   clerk_user_id: user?.id,
-        //   clerk_org_id: clerk_user_org_id,
-        //   configuration_json: newBoardConfig,
-        // });
+      const result = await addUserBoardConfiguration(supabase, newBoardConfig);
+      console.log('result', result);
 
-      if (insertError) throw insertError;
+      // if (insertError) throw insertError;
 
       // Navigate back to the board list
       router.back();
@@ -98,7 +68,7 @@ export const NewBoardSetupScreen = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title" style={styles.title}>Create New Board</ThemedText>
+      <ThemedText type="title" style={styles.title}>Create New Personal Board</ThemedText>
 
       {error && (
         <ThemedText style={styles.error}>{error}</ThemedText>
@@ -133,7 +103,7 @@ export const NewBoardSetupScreen = () => {
         <View style={styles.buttonGroup}>
           <Pressable
             style={[styles.button, styles.cancelButton]}
-            onPress={() => router.push('/(tabs)/boards/[id]/index')}
+            onPress={() => router.back()}
           >
             <ThemedText style={styles.buttonText}>Cancel</ThemedText>
           </Pressable>
@@ -153,7 +123,6 @@ export const NewBoardSetupScreen = () => {
   );
 }
 
-export default NewBoardSetupScreen;
 
 const styles = StyleSheet.create({
   container: {

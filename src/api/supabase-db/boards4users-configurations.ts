@@ -1,10 +1,10 @@
-import { BoardSetupDbRowSave } from "@/zod-types/board-setup/board-setup-db-row";
+import { UserBoardSetupDbRow, UserBoardSetupDbRowNew, UserBoardSetupDbRowSave } from "@/src/zod-types/boards/user-board-setup-db-row";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
-export const fetchBoardConfigurations = async (supabase: SupabaseClient) => {
+export const fetchUserBoardConfigurations = async (supabase: SupabaseClient) => {
   const { data, error } = await supabase
-    .from('board_configurations')
+    .from('boards4users')
     .select('*')
     .order('created_at', { ascending: false });
 
@@ -16,10 +16,10 @@ export const fetchBoardConfigurations = async (supabase: SupabaseClient) => {
 };
 
 
-export const fetchBoardConfigurationById = async (supabase: SupabaseClient, boardUuid: string) => {
+export const fetchUserBoardConfigurationById = async (supabase: SupabaseClient, boardUuid: string) => {
 
   const { data, error } = await supabase
-    .from('board_configurations')
+    .from('boards4users')
     .select('*')
     .eq('id', boardUuid)
     .single();
@@ -32,17 +32,18 @@ export const fetchBoardConfigurationById = async (supabase: SupabaseClient, boar
 };
 
 
-export const addBoardConfiguration = async (supabase: SupabaseClient, boardConfig: BoardSetupDbRowSave) => {
+export const addUserBoardConfiguration = async (supabase: SupabaseClient, boardConfig: UserBoardSetupDbRow) => {
   const now = new Date();
 
-  const insertRecord: BoardSetupDbRowSave = {
+  const newBoardConfig: UserBoardSetupDbRowNew = {
     ...boardConfig,
     created_at: now.toISOString(),
+    updated_at: now.toISOString(),
   }
 
   const { data, error } = await supabase
-    .from('board_configurations')
-    .insert(insertRecord);
+    .from('boards4users')
+    .insert(newBoardConfig);
 
   if (error) {
     throw error;
@@ -52,10 +53,10 @@ export const addBoardConfiguration = async (supabase: SupabaseClient, boardConfi
 };
 
 
-export const saveBoardConfiguration = async (supabase: SupabaseClient, boardConfig: BoardSetupDbRowSave) => {
+export const saveUserBoardConfiguration = async (supabase: SupabaseClient, boardConfig: UserBoardSetupDbRowSave) => {
   const now = new Date();
 
-  const updateRecord: BoardSetupDbRowSave = {
+  const updateRecord: UserBoardSetupDbRowSave = {
     ...boardConfig,
     updated_at: now.toISOString(),
   }
@@ -63,7 +64,7 @@ export const saveBoardConfiguration = async (supabase: SupabaseClient, boardConf
   console.log('updateRecord', updateRecord);
 
   const { data, error } = await supabase
-    .from('board_configurations')
+    .from('boards4users')
     .update(updateRecord)
     .eq('id', updateRecord.id);
 

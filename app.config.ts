@@ -23,9 +23,4 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
   },
 });
 
-console.log("AppConfig", AppConfig);
-console.log("EXPO_PUBLIC_SUPABASE_URL", process.env.EXPO_PUBLIC_SUPABASE_URL);
-console.log("EXPO_PUBLIC_SUPABASE_ANON_KEY", process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY);
-console.log("EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY", process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY);
-
 export default AppConfig;

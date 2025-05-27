@@ -1,6 +1,5 @@
 import { OrgBoardsOverviewScreen } from '@/src/components/boards/boards-overview/org-boards-overview';
 import { useUserAndOrgInfo } from '@/src/components/boards/boards-overview/selected-board-group-context';
-import { UserBoardsOverviewScreen } from '@/src/components/boards/boards-overview/user-boards-overview';
 import { ThemedText } from '@/src/components/ThemedText';
 import React from 'react';
 
@@ -9,25 +8,20 @@ const RootBoardsScreen = () => {
 
   const userAndOrgInfo = useUserAndOrgInfo();
 
-  if (userAndOrgInfo.userAndOrgType === 'none') {
+  if (userAndOrgInfo.userAndOrgType !== 'user-with-orgs') {
     return (
-      <ThemedText>User not found</ThemedText>
+      <ThemedText>No orgs for user</ThemedText>
     )
   }
 
-  if (
-    userAndOrgInfo.userAndOrgType === 'user-only' ||
-    userAndOrgInfo.activeOrgId === null
-  ) {
+  if (userAndOrgInfo.activeOrgId === null) {
     return (
-      <UserBoardsOverviewScreen 
-        userId={userAndOrgInfo.userId} 
-      />
+      <ThemedText>No active org for user</ThemedText>
     )
   }
 
   return (
-    <OrgBoardsOverviewScreen
+    <OrgBoardsOverviewScreen 
       orgId={userAndOrgInfo.activeOrgId}
       orgName={userAndOrgInfo.activeOrgId}
       userId={userAndOrgInfo.userId}

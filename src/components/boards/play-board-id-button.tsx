@@ -1,10 +1,11 @@
-import { useSaveBoardSetupContext } from "@/src/components/boards/save-board-setup-context";
 import { ThemedText } from "@/src/components/ThemedText";
 import { Pressable } from "react-native";
+// import { useBoardsScreenContext } from "./boards-overview/selected-board-group-context";
 
 
 export const PlayBoardIdButton = () => {
-  const { isDirty, boardUuid } = useSaveBoardSetupContext();
+  // const { isDirty } = useBoardsScreenContext();
+  const isDirty = false;
 
   const onPlay = () => {
     console.log('play');

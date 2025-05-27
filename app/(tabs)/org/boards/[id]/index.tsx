@@ -1,14 +1,12 @@
 import { BoardConfigEditor } from '@/src/components/boards/board-config-editor/board-config-editor';
-import { useSaveBoardSetupContext } from '@/src/components/boards/save-board-setup-context';
+import { useOrgBoardsScreenContext } from '@/src/components/boards/boards-overview/org-boards-screen-context';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 import { IconSymbol } from '@/src/components/ui/IconSymbol';
 import { FzbBoardDefaultConfigurations } from '@/src/zod-types/boards/board-types/fzb-board-defaults';
 import { BOARD_TYPE_OPTIONS, FzbBoardTypes } from '@/src/zod-types/boards/board-types/fzb-board-types';
-import { convertIdSearchParamToBoardIds } from '@/src/zod-types/branded-strings/board-id';
 import { Picker } from '@react-native-picker/picker';
-import { useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
 
@@ -145,20 +143,21 @@ const styles = StyleSheet.create({
 });
 
 
-export const BoardSetupScreen = () => {
-  const localSearchParams = useLocalSearchParams();
+const OrgBoardSetupScreen = () => {
+  // const localSearchParams = useLocalSearchParams();
 
-  const { boardUuid } = convertIdSearchParamToBoardIds(localSearchParams);
+  // const { boardUuid } = convertIdSearchParamToBoardIds(localSearchParams);
+
   
   const {
-    setBoardUuid,
+    // setBoardIdentity,
+    boardUuid,
     isLoading,
     currentBoardSetup,
     updateCurrentBoardSetup,
     error,
-  } = useSaveBoardSetupContext();
-
-  // const [error, setError] = useState<string | null>(null);
+  } = useOrgBoardsScreenContext();
+  
   const [editingName, setEditingName] = useState(false);
   const [editingDescription, setEditingDescription] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
@@ -169,12 +168,19 @@ export const BoardSetupScreen = () => {
   const boardName = currentBoardSetup?.name;
   const boardDescription = currentBoardSetup?.description;
 
-  useEffect(() => {
-    setBoardUuid(boardUuid);
-  }, [boardUuid, setBoardUuid]);
+  // useEffect(() => {
+  //   setBoardIdentity(boardUuid, 'user');
+  // }, [boardUuid, setBoardIdentity]);
 
+  if (!currentBoardSetup) {
+    return (
+      <ThemedView style={styles.container}>
+        <ThemedText>Board not found - {boardUuid}</ThemedText>
+      </ThemedView>
+    );
+  }
   
-  if (isLoading || !currentBoardSetup) {
+  if (isLoading) {
     return (
       <ThemedView style={styles.container}>
         <ActivityIndicator size="large" />
@@ -229,7 +235,6 @@ export const BoardSetupScreen = () => {
       ...currentBoardSetup,
       configuration_json: updatedBoardConfig,
     });
-    // setDirty();
   };
 
 
@@ -347,4 +352,4 @@ export const BoardSetupScreen = () => {
 // }
 
 
-export default BoardSetupScreen; 
+export default OrgBoardSetupScreen; 

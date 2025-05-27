@@ -7,13 +7,6 @@ export const MyOrganizationsComponent = () => {
     userMemberships: true,
   })
 
-  // console.log('Clerk Organizations Debug:', {
-  //   isLoaded,
-  //   userMemberships,
-  //   data: userMemberships?.data,
-  //   count: userMemberships?.data?.length
-  // })
-
   if (!isLoaded) {
     return (
       <View style={styles.container}>

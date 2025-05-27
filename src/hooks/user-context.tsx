@@ -28,7 +28,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     supabaseAnonKey,
     {
       async accessToken() {
-        return await getToken();
+        const token = await getToken();
+        return token;
       },
       auth: {
         storage: AsyncStorage,

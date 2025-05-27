@@ -16,23 +16,8 @@ export const BoardSetupsLayout = () => {
         <Stack.Screen
           name="index"
           options={{
-            title: 'Boards - Root',
+            title: 'My Boards - Root',
             headerRight: BoardsScreenHeader,
-          }}
-        />
-        <Stack.Screen
-          name="mine"
-          options={{
-            title: 'My Boards',
-            headerShown: false,
-            // headerRight: BoardsScreenHeader,
-          }}
-        />
-        <Stack.Screen
-          name="org"
-          options={{
-            title: 'Org Boards',
-            headerShown: false,
           }}
         />
       </Stack>

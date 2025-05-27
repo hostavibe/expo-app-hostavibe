@@ -1,4 +1,3 @@
-import { OrgBoardsOverviewScreen } from '@/src/components/boards/boards-overview/org-boards-overview';
 import { useUserAndOrgInfo } from '@/src/components/boards/boards-overview/selected-board-group-context';
 import { UserBoardsOverviewScreen } from '@/src/components/boards/boards-overview/user-boards-overview';
 import { ThemedText } from '@/src/components/ThemedText';
@@ -15,22 +14,9 @@ const RootBoardsScreen = () => {
     )
   }
 
-  if (
-    userAndOrgInfo.userAndOrgType === 'user-only' ||
-    userAndOrgInfo.activeOrgId === null
-  ) {
-    return (
-      <UserBoardsOverviewScreen 
-        userId={userAndOrgInfo.userId} 
-      />
-    )
-  }
-
   return (
-    <OrgBoardsOverviewScreen
-      orgId={userAndOrgInfo.activeOrgId}
-      orgName={userAndOrgInfo.activeOrgId}
-      userId={userAndOrgInfo.userId}
+    <UserBoardsOverviewScreen 
+      userId={userAndOrgInfo.userId} 
     />
   )
 }

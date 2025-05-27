@@ -1,18 +1,18 @@
 import { ThemedText } from "@/src/components/ThemedText";
-import { BoardSetupDbRowFull } from "@/src/zod-types/boards/board-setup-db-row";
+import { OrgBoardSetupDbRowFull } from "@/src/zod-types/boards/org-board-setup-db-row";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Alert, Pressable, StyleSheet, View } from "react-native";
 
 
-interface BoardSetupItemProps {
-  item: BoardSetupDbRowFull;
+interface OrgBoardSetupItemProps {
+  item: OrgBoardSetupDbRowFull;
   onDelete: (id: string) => void;
   onLaunch: (id: string) => void;
 }
 
-export const BoardSetupListItem = ({ item, onDelete, onLaunch }: BoardSetupItemProps) => {
+export const OrgBoardSetupListItem = ({ item, onDelete, onLaunch }: OrgBoardSetupItemProps) => {
 
   const handleDelete = () => {
     Alert.alert(
@@ -33,9 +33,20 @@ export const BoardSetupListItem = ({ item, onDelete, onLaunch }: BoardSetupItemP
   };
 
   const handleSubmissions = () => {
-    const submissionsRoute = `/boards/board_${item.id}/submissions`;
-    console.log('submissionsRoute', submissionsRoute);
-    router.push(submissionsRoute as any);
+    console.log('handleSubmissions', item.id);
+    const boardId = `board_${item.id}`;
+    // const submissionsRoute = `/(tabs)/boards/org/${boardId}/submissions`;
+    // console.log('submissionsRoute', submissionsRoute);
+    // router.push(submissionsRoute as any);
+    // const submissionsRoute = `/(tabs)/org-boards/[id]/submissions`;
+    // const submissionsRoute = `/(tabs)/boards/org/[id]/submissions`;
+    const submissionsRoute = `/(tabs)/org/boards/[id]/submissions`;
+    router.push({
+      pathname: submissionsRoute,
+      params: {
+        id: boardId
+      }
+    });
   }
 
   return (

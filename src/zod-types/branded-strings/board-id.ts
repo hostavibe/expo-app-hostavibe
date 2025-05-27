@@ -17,15 +17,18 @@ type BoardIds = {
 }
 
 export const convertIdSearchParamToBoardIds = (localSearchParams: UnknownOutputParams): BoardIds => {
+  console.log('localSearchParams', localSearchParams);
   const boardId = localSearchParams.id as string;
 
   const parsedBoardId = BoardIdSchema.safeParse(boardId);
   if (!parsedBoardId.success) {
     console.log('localSearchParams', localSearchParams);
-    throw new Error('Invalid board ID');
+    throw new Error(`Invalid board ID - ${boardId}`);
   }
 
   const boardUuid = parsedBoardId.data.substring(BoardIdPrefix.length);
+
+  console.log('boardUuid', boardUuid);
 
   return {
     boardUuid,

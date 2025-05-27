@@ -1,6 +1,6 @@
 import { ThemedText } from '@/src/components/ThemedText';
 import { useUserContext } from '@/src/hooks/user-context';
-import { useAuth, useSession } from '@clerk/clerk-expo';
+import { useAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { decode } from 'base64-arraybuffer';
 import * as ImagePicker from 'expo-image-picker';
@@ -26,8 +26,6 @@ export const MyPostsScreen = () => {
 
   const { supabase } = useUserContext();
 
-  const { session } = useSession();
-
   
   const uploadImagePost = async () => {
     const uri = imageData;
@@ -42,10 +40,6 @@ export const MyPostsScreen = () => {
 
       if (!isSignedIn || !userId) {
         throw new Error('User not authenticated');
-      }
-
-      if (!session) {
-        throw new Error('No session available');
       }
 
       setUploading(true);
