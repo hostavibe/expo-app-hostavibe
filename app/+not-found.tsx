@@ -1,28 +1,31 @@
-import { Link, router, Stack, usePathname } from 'expo-router';
-import React, { useEffect } from 'react';
+import { Link, router, Stack, useFocusEffect, usePathname } from 'expo-router';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 
 export default function NotFoundScreen() {
-  const pathname = usePathname();
+  const hookPathname = usePathname();
+  console.log('pathname from hook', hookPathname);
+
+  const windowLocationPathname = window.location.pathname;
+  console.log('windowLocationPathname', windowLocationPathname);
 
   // const baseUrl = Constants.expoConfig?.experiments?.baseUrl || '';
 
-
-  useEffect(() => {
+  useFocusEffect(() => {
     // If this is a direct URL access (not client-side navigation)
     if (typeof window !== 'undefined' && !window.history.state?.usr?.isClientNavigation) {
       // Redirect to the same path but with a query parameter
       // const searchParams = new URLSearchParams(window.location.search);
       // searchParams.set('path', pathname);
       // window.location.href = `/?${searchParams.toString()}`;
-      console.log('window.location.pathname', window.location.pathname);
-      const pathname = decodeURIComponent(window.location.pathname);
-      router.replace(pathname);
+      // console.log('window.location.pathname', window.location.pathname);
+      // const pathname = decodeURIComponent(window.location.pathname);
+      router.replace(windowLocationPathname as any);
     }
-  }, [pathname]);
+  });
 
   return (
     <>
