@@ -1,7 +1,7 @@
-import { BoardOwnerType } from "@/src/api/supabase-db/boards4all-configurations";
 import { fetchOrgBoardConfigurationById, saveOrgBoardConfiguration } from "@/src/api/supabase-db/boards4orgs-configurations";
 import { useUserContext } from "@/src/hooks/user-context";
 import { OrgBoardSetupDbRowFull, OrgBoardSetupDbRowFullSchema } from "@/src/zod-types/boards/org-board-setup-db-row";
+import { BoardOwnerType } from "@/src/zod-types/branded-strings/board-id";
 import { createContext, useContext, useEffect, useState } from "react";
 
 

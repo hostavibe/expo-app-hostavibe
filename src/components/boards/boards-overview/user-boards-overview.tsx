@@ -102,7 +102,7 @@ export const UserBoardsOverviewScreen = ({ userId }: UserBoardsOverviewScreenPro
                   pathname: `/(tabs)/my/boards/[id]`,
                   // pathname: `/(tabs)/boards/mine/[id]`,
                   params: {
-                    id: `board_${item.id}`
+                    id: `ubrd_${item.id}`
                   }
                   
                   // pathname: '/(tabs)/boards/mine/[zboardId]',

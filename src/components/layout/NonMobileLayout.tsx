@@ -1,8 +1,8 @@
-import { RootLayoutProps } from "@/app/(tabs)/_layout";
 import { HapticTab } from "@/src/components/HapticTab";
 import { IconSymbol } from "@/src/components/ui/IconSymbol";
 import TabBarBackground from "@/src/components/ui/TabBarBackground";
 import { Colors } from "@/src/constants/Colors";
+import { HIDDEN_TAB_TITLES, RootLayoutProps } from "@/src/types/layout";
 import { Tabs } from "expo-router";
 import { ViewStyle } from "react-native";
 
@@ -33,6 +33,17 @@ export const NonMobileLayout = (props: RootLayoutProps) => {
         },
       }}
     >
+      {
+        HIDDEN_TAB_TITLES.map((tab) => (
+          <Tabs.Screen
+            key={tab}
+            name={tab}
+            options={{
+              href: null,
+            }}
+          />
+        ))
+      }
       {visibleTabs.map((tab) => (
         <Tabs.Screen
           key={tab.name}

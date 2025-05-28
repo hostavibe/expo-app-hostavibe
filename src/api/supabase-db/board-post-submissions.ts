@@ -1,13 +1,13 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
-const BOARD_POST_SUBMISSIONS_TABLE = 'board_post_submissions';
+const BOARD_POST_SUBMISSIONS_TABLE = 'board4user_post_submissions';
 
 
 export type UserBoardPostSubmissionItem = {
   id: string;
   submitted_user_post_id: string;
-  submitted_for_board_id: string;
+  submitted_board4user_id: string;
   submitted_for_screen_id?: string;
   submitted_at: string;
   approved_at?: string;
@@ -19,12 +19,12 @@ export type UserBoardPostSubmissionItem = {
 
 export type UserBoardPostSubmissionAdd = {
   submitted_user_post_id: string;
-  submitted_for_board_id: string;
+  submitted_board4user_id: string;
 }
 
 export type UserScreenPostSubmissionAdd = {
   submitted_user_post_id: string;
-  submitted_for_board_id: string;
+  submitted_board4user_id: string;
   submitted_for_screen_id: string;
 }
 
@@ -33,7 +33,7 @@ export const fetchUserBoardPostSubmissions = async (supabase: SupabaseClient, bo
   const { data, error } = await supabase
     .from(BOARD_POST_SUBMISSIONS_TABLE)
     .select('*')
-    .eq('submitted_for_board_id', boardUuid)
+    .eq('submitted_board4user_id', boardUuid)
     .order('submitted_at', { ascending: false });
 
   if (error) {

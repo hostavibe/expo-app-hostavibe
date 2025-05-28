@@ -1,50 +1,26 @@
+import { fetchAllUserPosts } from '@/src/api/supabase-db/user-posts';
+import { UserPostDetailsForId } from '@/src/api/types/user-post-details-for-id';
 import { ThemedText } from '@/src/components/ThemedText';
 import { useUserContext } from '@/src/hooks/user-context';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
-import { UserPost, UserPostSchema } from './[id]';
-
-
-// const UserPostSchema = z.object({
-//   id: z.string(),
-//   caption: z.string(),
-//   upload_filename: z.string(),
-//   created_at: z.string(),
-//   updated_at: z.string(),
-// });
-
-// type UserPost = z.infer<typeof UserPostSchema>;
 
 
 export const MyPostsScreen = () => {
   
-  const [userPosts, setUserPosts] = useState<UserPost[]>([]);
+  const [userPosts, setUserPosts] = useState<UserPostDetailsForId[]>([]);
   const { supabase, isUserLoaded } = useUserContext();
 
   
   useEffect(() => {
-    async function fetchUserPosts() {
-      if (!supabase || !isUserLoaded) {
-        return;
-      }
-
-      console.log("supabase", supabase);
+    const fetchUserPosts = async () => {
 
       try {
-        const { data, error } = await supabase
-          .from('user_posts')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) {
-          throw error;
+        const posts = await fetchAllUserPosts(supabase);
+        if (posts) {
+          setUserPosts(posts);
         }
-
-        const validatedPosts = data
-          ?.map(post => UserPostSchema.parse(post))
-          .filter(post => post !== undefined);
-        setUserPosts(validatedPosts);
       } catch (err) {
         console.error('Error fetching user posts:', err);
       }
@@ -59,7 +35,7 @@ export const MyPostsScreen = () => {
       <View style={styles.header}>
         <Pressable
           style={styles.addButton}
-          onPress={() => router.push('/my-posts/new')}
+          onPress={() => router.push('/my/posts/new')}
           // disabled={uploading}
         >
           <ThemedText style={styles.addButtonText}>New Post</ThemedText>
@@ -71,7 +47,12 @@ export const MyPostsScreen = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Pressable
-            onPress={() => router.push(`/my-posts/${item.id}` as any)}
+            onPress={() => router.push({
+              pathname: '/my/posts/[id]',
+              params: {
+                id: item.id,
+              },
+            })}
             style={styles.configItem}
           >
             <ThemedText type="title">{item.configuration_json}</ThemedText>

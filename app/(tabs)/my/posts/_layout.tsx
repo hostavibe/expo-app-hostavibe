@@ -35,13 +35,13 @@ export const MyPostsLayout = () => {
           title: 'My Posts',
         }}
       >
-        <Stack.Screen
+        {/* <Stack.Screen
           name="index"
           options={{
+            title: 'All My Posts',
             headerShown: true,
-            title: 'My Posts',
           }}
-        />
+        /> */}
         <Stack.Screen
           name="[id]"
           options={{

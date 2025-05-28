@@ -5,10 +5,9 @@ import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 import { useEnvironment } from '@/src/hooks/useEnvironment';
 import { SignedIn, SignedOut, useOrganization, useUser } from '@clerk/clerk-expo';
-import { OrganizationSwitcher } from '@clerk/clerk-expo/web';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
-import { Platform, StyleSheet, Text } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
 
 export const ProfileScreen = () => {
@@ -23,10 +22,15 @@ export const ProfileScreen = () => {
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
-        <Image
-          source={require('@/assets/images/hosta-leaf.png')}
-          style={styles.reactLogo}
-        />
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('@/assets/images/hosta-leaf.png')}
+            style={styles.reactLogo}
+            contentFit="contain"
+            transition={1000}
+            onError={(error) => console.error('Image loading error:', error)}
+          />
+        </View>
       }>
       <ThemedView style={styles.titleContainer}>
         <SignedIn>
@@ -56,8 +60,6 @@ export const ProfileScreen = () => {
         <ThemedText>Base URL: {baseUrl || 'Not set'}</ThemedText> */}
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <OrganizationSwitcher />
-        
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
@@ -92,12 +94,17 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
-  reactLogo: {
+  imageContainer: {
+    width: '100%',
     height: 178,
-    width: 290,
+    position: 'absolute',
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    backgroundColor: 'transparent',
+  },
+  reactLogo: {
+    width: '100%',
+    height: '100%',
   },
 });
 

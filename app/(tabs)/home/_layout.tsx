@@ -8,7 +8,6 @@ export const HomeLayout = () => {
       screenOptions={{
         headerShown: true,
         title: 'Home',
-        
       }}
     >
       <Stack.Screen
@@ -19,10 +18,18 @@ export const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="scan-to-post"
+        name="profile/index"
         options={{
-          title: 'Scan to Post',
+          title: 'Profile',
           presentation: 'modal',
+          headerShown: true,
+          headerBackVisible: true,
+        }}
+      />
+      <Stack.Screen
+        name="post-to-board-screen"
+        options={{
+          title: 'Post to Board',
         }}
       />
     </Stack>

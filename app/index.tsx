@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { router } from "expo-router";
+import { Button, Text, View } from "react-native";
 
 export default function Index() {
   return (
@@ -9,7 +10,12 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Hi there - edit app/index.tsx to edit this screen.</Text>
+      <Text>Hi there - edit app/index2.tsx to edit this screen.</Text>
+
+      <Button
+        title="Go to Home Screen"
+        onPress={() => router.push('/(tabs)/home')}
+      />
     </View>
   );
 }

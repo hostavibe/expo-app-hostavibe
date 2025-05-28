@@ -4,13 +4,14 @@ import { Stack } from 'expo-router';
 import React from 'react';
 
 
-export const BoardSetupsLayout = () => {
+export const MyBoardSetupsLayout = () => {
 
   return (
     <UserAndOrgInfoContextProvder>
       <Stack
         screenOptions={{
           headerBackTitle: 'Back',
+          headerShown: false,
         }}
       >
         <Stack.Screen
@@ -25,4 +26,4 @@ export const BoardSetupsLayout = () => {
   );
 }
 
-export default BoardSetupsLayout;
+export default MyBoardSetupsLayout;

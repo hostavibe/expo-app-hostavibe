@@ -1,4 +1,4 @@
-import { useOrganization, useUser } from "@clerk/clerk-expo";
+import { useClerk, useOrganization, useUser } from "@clerk/clerk-expo";
 import { OrganizationMembershipResource } from "@clerk/types";
 import React, { createContext, useContext } from "react";
 
@@ -13,6 +13,7 @@ type UserAndOrgInfo = {
   userId: string;
   activeOrgId: string | null;
   getUserOrgs: () => OrganizationMembershipResource[];
+  setActiveOrgId: (orgId: string) => Promise<void>;
 }
 
 export const UserAndOrgInfoContext = createContext<UserAndOrgInfo>({
@@ -24,6 +25,7 @@ export const UserAndOrgInfoContextProvder = ({ children }: { children: React.Rea
 
   const { user } = useUser();
   const { organization } = useOrganization();
+  const { setActive } = useClerk();
 
   const getUserAndOrgInfo = (): UserAndOrgInfo => {
     if (!user) {
@@ -38,13 +40,20 @@ export const UserAndOrgInfoContextProvder = ({ children }: { children: React.Rea
         userId: user.id,
       };
     }
-  
+
+    const setActiveOrgId = async (orgId: string) => {
+      if (setActive) {
+        await setActive({ organization: orgId });
+      }
+    }
+
     if (!organization) {
       return {
         userAndOrgType: 'user-with-orgs' as const,
         userId: user.id,
         activeOrgId: null,
         getUserOrgs: () => user.organizationMemberships,
+        setActiveOrgId,
       };
     }
   
@@ -53,6 +62,7 @@ export const UserAndOrgInfoContextProvder = ({ children }: { children: React.Rea
       userId: user.id,
       activeOrgId: organization.id,
       getUserOrgs: () => user.organizationMemberships,
+      setActiveOrgId,
     };    
   }
 

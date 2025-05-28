@@ -1,23 +1,30 @@
 import { UserAndOrgInfoContextProvder } from '@/src/components/boards/boards-overview/selected-board-group-context';
-import { BoardsScreenHeader } from '@/src/components/boards/boards-screen-header';
 import { Stack } from 'expo-router';
 import React from 'react';
 
-
-export const BoardSetupsLayout = () => {
-
+export const OrgBoardSetupsLayout = () => {
   return (
     <UserAndOrgInfoContextProvder>
       <Stack
         screenOptions={{
           headerBackTitle: 'Back',
+          title: 'My Org Boards',
+          headerShown: true,
         }}
       >
         <Stack.Screen
           name="index"
           options={{
-            title: 'My Org Boards - Root',
-            headerRight: BoardsScreenHeader,
+            title: 'My Org Boards - Roodt',
+            // headerShown: true,
+            // headerBackVisible: true,
+          }}
+        />
+        <Stack.Screen
+          name="[id]/submissions"
+          options={{
+            title: 'My Single Org Board',
+            // headerShown: false,
           }}
         />
       </Stack>
@@ -25,4 +32,4 @@ export const BoardSetupsLayout = () => {
   );
 }
 
-export default BoardSetupsLayout;
+export default OrgBoardSetupsLayout;

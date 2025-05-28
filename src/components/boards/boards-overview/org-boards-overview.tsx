@@ -3,6 +3,7 @@ import { ThemedText } from '@/src/components/ThemedText'
 import { ThemedView } from '@/src/components/ThemedView'
 import { useUserContext } from '@/src/hooks/user-context'
 import { OrgBoardSetupDbRowFull, OrgBoardSetupDbRowFullSchema } from '@/src/zod-types/boards/org-board-setup-db-row'
+import { OrgBoardIdPrefix } from '@/src/zod-types/branded-strings/board-id'
 import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native'
@@ -78,7 +79,14 @@ export const OrgBoardsOverviewScreen = ({ orgId, orgName, userId }: OrgBoardsOve
   const handleLaunch = (id: string) => {
     console.log('launch', id);
     // router.push(`/boards/board_${id}/play`);
-    // router.push(`/(actions)/play-board/board_${id}`);
+    
+    const boardId = `${OrgBoardIdPrefix}${id}`;
+    router.push({
+      pathname: '/(actions)/play-board/[id]',
+      params: {
+        id: boardId,
+      },
+    });
   }
 
 
@@ -100,7 +108,7 @@ export const OrgBoardsOverviewScreen = ({ orgId, orgName, userId }: OrgBoardsOve
                   pathname: `/(tabs)/org/boards/[id]`,
                   // pathname: `/(tabs)/boards/org/[id]/submissions`,
                   params: {
-                    id: `board_${item.id}`
+                    id: `obrd_${item.id}`
                   }
                 })}
                 style={styles.configItem}

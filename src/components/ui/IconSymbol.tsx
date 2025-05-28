@@ -24,6 +24,7 @@ const MAPPING = {
   'chevron.left': 'chevron-left',
   'person.fill': 'person',
   'line.3.horizontal': 'menu',
+  'building.2.fill': 'business',
 } as IconMapping;
 
 /**

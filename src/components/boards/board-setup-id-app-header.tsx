@@ -1,13 +1,13 @@
-import React from "react";
-import { PlayBoardIdButton } from "./play-board-id-button";
+// import React from "react";
+// import { PlayBoardIdButton } from "./play-org-board-id-button";
 
 
-export const BoardSetupIdAppHeader = () => {
+// export const BoardSetupIdAppHeader = () => {
  
-  return (
-    <>
-      <PlayBoardIdButton />
-      {/* <SaveBoardIdButton /> */}
-    </>
-  )
-}
+//   return (
+//     <>
+//       <PlayBoardIdButton />
+//       {/* <SaveBoardIdButton /> */}
+//     </>
+//   )
+// }

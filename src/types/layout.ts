@@ -21,23 +21,39 @@ export const ALL_TABS: TabData[] = [
     icon: 'house.fill',
   },
   {
-    name: 'my-posts',
+    name: 'my/posts',
     title: 'My Posts',
     icon: 'photo.fill',
   },
   {
-    name: 'boards',
-    title: 'Boards',
+    name: 'my/boards',
+    title: 'My Boards',
     icon: 'display',
   },
   {
-    name: 'debug',
-    title: 'Debug',
-    icon: 'photo.fill',
+    name: 'org',
+    title: 'My Orgs',
+    icon: 'building.2.fill',
   },
-  {
-    name: 'profile',
-    title: 'Profile',
-    icon: 'person.fill',
-  },
-] as const; 
+  // {
+  //   name: 'debug',
+  //   title: 'Debug',
+  //   icon: 'photo.fill',
+  // },
+  // {
+  //   name: 'profile',
+  //   title: 'Profile',
+  //   icon: 'person.fill',
+  // },
+] as const;
+
+
+
+export const HIDDEN_TAB_TITLES = [
+  'index',
+  // 'board-setups',
+  // 'menu',
+  // 'org',
+  'boards',
+  'debug',
+]

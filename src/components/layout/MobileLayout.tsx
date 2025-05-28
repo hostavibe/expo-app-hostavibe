@@ -1,7 +1,7 @@
 import { IconSymbol } from "@/src/components/ui/IconSymbol";
 import TabBarBackground from "@/src/components/ui/TabBarBackground";
 import { Colors } from "@/src/constants/Colors";
-import { ALL_TABS, RootLayoutProps } from "@/src/types/layout";
+import { ALL_TABS, HIDDEN_TAB_TITLES, RootLayoutProps } from "@/src/types/layout";
 import { Tabs } from "expo-router";
 import { Platform, ViewStyle } from "react-native";
 
@@ -49,7 +49,7 @@ export const MobileLayout = (props: RootLayoutProps) => {
       }}
     >
       {
-        hiddenTabTitles.map((tab) => (
+        HIDDEN_TAB_TITLES.map((tab) => (
           <Tabs.Screen
             key={tab}
             name={tab}

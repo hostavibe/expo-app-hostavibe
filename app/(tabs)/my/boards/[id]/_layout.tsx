@@ -19,6 +19,7 @@ export const MyBoardDetailsLayout = () => {
         screenOptions={{
           headerBackTitle: 'Back',
           headerTitle: 'My Boards',
+          headerShown: true,
         }}
       >
         <Stack.Screen
@@ -27,14 +28,14 @@ export const MyBoardDetailsLayout = () => {
             title: 'Board Details',
             headerTitle: 'Board Details 2',
             headerRight: BoardsScreenHeader,
-            headerShown: false,
+            // headerShown: false,
           }}
         />
         <Stack.Screen
           name="submissions"
           options={{
-            title: 'Board Submissions',
-            headerShown: false,
+            headerTitle: 'Board Submissions',
+            // headerShown: false,
           }}
         />
       </Stack>

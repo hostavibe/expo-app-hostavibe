@@ -38,10 +38,12 @@ export const UserBoardSetupListItem = ({ item, onDelete, onLaunch }: UserBoardSe
     // console.log('submissionsRoute', submissionsRoute);
     // router.push(submissionsRoute as any);
 
+    const boardId = `ubrd_${item.id}`;
+
     router.push({
       pathname: `/(tabs)/my/boards/[id]/submissions`,
       params: {
-        id: `board_${item.id}`
+        id: boardId,
       }
       
       // pathname: '/(tabs)/boards/mine/[zboardId]',

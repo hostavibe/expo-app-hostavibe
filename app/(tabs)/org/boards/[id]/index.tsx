@@ -1,12 +1,15 @@
 import { BoardConfigEditor } from '@/src/components/boards/board-config-editor/board-config-editor';
 import { useOrgBoardsScreenContext } from '@/src/components/boards/boards-overview/org-boards-screen-context';
+import { PlayOrgBoardIdButton } from '@/src/components/boards/play-org-board-id-button';
+import { SaveOrgBoardSetupButton } from '@/src/components/boards/save-org-board-setup-button';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 import { IconSymbol } from '@/src/components/ui/IconSymbol';
 import { FzbBoardDefaultConfigurations } from '@/src/zod-types/boards/board-types/fzb-board-defaults';
 import { BOARD_TYPE_OPTIONS, FzbBoardTypes } from '@/src/zod-types/boards/board-types/fzb-board-types';
 import { Picker } from '@react-native-picker/picker';
-import React, { useState } from 'react';
+import { router, useNavigation } from 'expo-router';
+import React, { useLayoutEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 
 
@@ -143,10 +146,25 @@ const styles = StyleSheet.create({
 });
 
 
+const OrgBoardSetupScreenHeader = () => {
+  
+  return (
+    <>
+      <PlayOrgBoardIdButton />
+      <SaveOrgBoardSetupButton />
+    </>
+  )
+}
+
+
 const OrgBoardSetupScreen = () => {
   // const localSearchParams = useLocalSearchParams();
 
   // const { boardUuid } = convertIdSearchParamToBoardIds(localSearchParams);
+
+  const navigation = useNavigation();
+
+  console.log('OrgBoardSetupScreen');
 
   
   const {
@@ -171,6 +189,32 @@ const OrgBoardSetupScreen = () => {
   // useEffect(() => {
   //   setBoardIdentity(boardUuid, 'user');
   // }, [boardUuid, setBoardIdentity]);
+
+  
+  useLayoutEffect(() => {
+    const title = `Org Board Details - ${boardName}`;
+    console.log("SETTING TITLE", title);
+    navigation.setOptions({
+      title,
+      headerRight: OrgBoardSetupScreenHeader,
+      headerBackVisible: true,
+      headerLeft: () => (
+        <Pressable
+          onPress={() => router.push('/org/boards')}
+          style={({ pressed }) => ({
+            opacity: pressed ? 0.7 : 1,
+            padding: 8,
+            outlineWidth: 1,
+            outlineColor: 'red',
+            outlineStyle: 'solid',
+          })}
+        >
+          <IconSymbol name="chevron.left" size={24} color="#007AFF" />
+        </Pressable>
+      ),
+    });
+  }, [navigation, boardName]);
+
 
   if (!currentBoardSetup) {
     return (

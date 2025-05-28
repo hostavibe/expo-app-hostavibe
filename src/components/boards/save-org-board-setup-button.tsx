@@ -1,12 +1,10 @@
 import { ThemedText } from "@/src/components/ThemedText";
 import { Pressable } from "react-native";
-// import { useBoardsScreenContext } from "./boards-overview/selected-board-group-context";
+import { useOrgBoardsScreenContext } from "./boards-overview/org-boards-screen-context";
 
 
-export const SaveBoardIdButton = () => {
-  // const { isDirty, onSave } = useBoardsScreenContext();
-
-  const isDirty = false;
+export const SaveOrgBoardSetupButton = () => {
+  const { isDirty, onSave } = useOrgBoardsScreenContext();
 
   return (
     <Pressable
@@ -14,8 +12,8 @@ export const SaveBoardIdButton = () => {
         opacity: pressed ? 0.7 : 1,
         padding: 18,
       })}
-      // disabled={!isDirty}
-      // onPress={onSave}
+      disabled={!isDirty}
+      onPress={onSave}
     >
       <ThemedText style={{ color: '#007AFF' }}>{isDirty ? 'Save - isDirty' : 'No Save'}</ThemedText>
     </Pressable>
