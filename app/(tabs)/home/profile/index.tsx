@@ -1,4 +1,3 @@
-import { MyOrganizationsComponent } from '@/src/components/MyOrganizations';
 import { SignOutButton } from '@/src/components/SignOutButton';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
@@ -6,7 +5,7 @@ import { useEnvironment } from '@/src/hooks/useEnvironment';
 import { SignedIn, SignedOut, useOrganization, useUser } from '@clerk/clerk-expo';
 import { Link } from 'expo-router';
 import React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 
 export const ProfileScreen = () => {
@@ -25,7 +24,7 @@ export const ProfileScreen = () => {
           {organization && (
             <Text>Active Organization: {organization.name}</Text>
           )}
-          <MyOrganizationsComponent />
+          {/* <MyOrganizationsComponent /> */}
           <SignOutButton />
         </SignedIn>
         <SignedOut>
@@ -51,13 +50,13 @@ export const ProfileScreen = () => {
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
           Press{' '}
-          <ThemedText type="defaultSemiBold">
+          {/* <ThemedText type="defaultSemiBold">
             {Platform.select({
               ios: 'cmd + d',
               android: 'cmd + m',
               web: 'F12',
             })}
-          </ThemedText>{' '}
+          </ThemedText>{' '} */}
           to open developer tools.
         </ThemedText>
       </ThemedView>
