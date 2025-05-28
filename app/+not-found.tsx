@@ -1,4 +1,3 @@
-import Constants from 'expo-constants';
 import { Link, Stack, usePathname } from 'expo-router';
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
@@ -8,17 +7,16 @@ import { ThemedView } from '@/src/components/ThemedView';
 
 export default function NotFoundScreen() {
   const pathname = usePathname();
-  const baseUrl = Constants.expoConfig?.experiments?.baseUrl || '';
 
   useEffect(() => {
     // If this is a direct URL access (not client-side navigation)
     if (typeof window !== 'undefined' && !window.history.state?.usr?.isClientNavigation) {
       // Redirect to the same path but with a query parameter
       const searchParams = new URLSearchParams(window.location.search);
-      searchParams.set('redirect', pathname);
-      window.location.href = `${baseUrl}/?${searchParams.toString()}`;
+      searchParams.set('path', pathname);
+      window.location.href = `/?${searchParams.toString()}`;
     }
-  }, [pathname, baseUrl]);
+  }, [pathname]);
 
   return (
     <>
