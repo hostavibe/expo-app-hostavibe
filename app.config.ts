@@ -33,6 +33,16 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
         include: ['@expo/vector-icons'],
       },
     },
+    // Add GitHub Pages specific configuration
+    router: {
+      baseUrl: '/expo-app-hostavibe', // Replace with your repo name if different
+    },
+    // Ensure all routes return index.html
+    static: {
+      rewrites: [
+        { source: '**', destination: '/index.html' }
+      ]
+    }
   },
 });
 
