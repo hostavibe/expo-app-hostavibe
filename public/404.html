@@ -4,11 +4,17 @@
     <meta charset="utf-8">
     <title>Redirecting...</title>
     <script>
-      sessionStorage.redirect = location.href;
+      // Get the current path and preserve it
+      const path = window.location.pathname;
+      const search = window.location.search;
+      const hash = window.location.hash;
+      
+      // Redirect to the root while preserving the path
+      window.location.replace('/expo-app-hostavibe' + path + search + hash);
     </script>
-    <meta http-equiv="refresh" content="0;URL='/'">
   </head>
   <body>
+    <p>Redirecting to application...</p>
   </body>
 </html> 
 
