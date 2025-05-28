@@ -1,26 +1,30 @@
+import { SignOutButton } from '@/src/components/SignOutButton';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
+import { useEnvironment } from '@/src/hooks/useEnvironment';
+import { SignedIn, SignedOut, useOrganization, useUser } from '@clerk/clerk-expo';
+import { Link } from 'expo-router';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 
 export const ProfileScreen = () => {
 
-  // const { user } = useUser()
-  // const { organization } = useOrganization()
+  const { user } = useUser()
+  const { organization } = useOrganization()
 
-  // const env = useEnvironment();
+  const env = useEnvironment();
 
   
   return (
     <View>
       <ThemedView style={styles.titleContainer}>
-        {/* <SignedIn>
+        <SignedIn>
           <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
           {organization && (
             <Text>Active Organization: {organization.name}</Text>
           )}
-          <MyOrganizationsComponent />
+          {/* <MyOrganizationsComponent /> */}
           <SignOutButton />
         </SignedIn>
         <SignedOut>
@@ -30,14 +34,14 @@ export const ProfileScreen = () => {
           <Link href="/(auth)/sign-up">
             <Text>Sign up</Text>
           </Link>
-        </SignedOut> */}
+        </SignedOut>
 
 {/* 
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
          */}
         {/* Example of displaying environment variables (remove in production) */}
-        {/* <ThemedText>Environment: {env.envName || 'Not set'}</ThemedText> */}
+        <ThemedText>Environment: {env.envName || 'Not set'}</ThemedText>
         {/* <ThemedText>API Key: {apiKey ? '****' : 'Not set'}</ThemedText>
         <ThemedText>Base URL: {baseUrl || 'Not set'}</ThemedText> */}
       </ThemedView>
