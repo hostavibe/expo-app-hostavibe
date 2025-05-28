@@ -1,11 +1,23 @@
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, usePathname } from 'expo-router';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
-import React from 'react';
 
 export default function NotFoundScreen() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // If this is a direct URL access (not client-side navigation)
+    if (typeof window !== 'undefined' && !window.history.state?.usr?.isClientNavigation) {
+      // Redirect to the same path but with a query parameter
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.set('path', pathname);
+      window.location.href = `/?${searchParams.toString()}`;
+    }
+  }, [pathname]);
+
   return (
     <>
       <Stack.Screen options={{ title: 'Oops!' }} />
