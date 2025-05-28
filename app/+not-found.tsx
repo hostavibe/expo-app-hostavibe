@@ -18,7 +18,8 @@ export default function NotFoundScreen() {
       // const searchParams = new URLSearchParams(window.location.search);
       // searchParams.set('path', pathname);
       // window.location.href = `/?${searchParams.toString()}`;
-      const pathname = window.location.pathname;
+      console.log('window.location.pathname', window.location.pathname);
+      const pathname = decodeURIComponent(window.location.pathname);
       router.replace(pathname);
     }
   }, [pathname]);
