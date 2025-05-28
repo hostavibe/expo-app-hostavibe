@@ -24,23 +24,18 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
   web: {
     bundler: 'metro',
     output: 'single',
-    // This tells the web server to serve index.html for all routes
-    // This enables client-side routing to work properly
     favicon: './assets/favicon.png',
-    // Add this to handle all routes
     build: {
       babel: {
         include: ['@expo/vector-icons'],
       },
     },
-    // Add GitHub Pages specific configuration
     router: {
-      baseUrl: '/expo-app-hostavibe', // Replace with your repo name if different
+      baseUrl: '/expo-app-hostavibe',
     },
-    // Ensure all routes return index.html
-    static: {
-      rewrites: [
-        { source: '**', destination: '/index.html' }
+    extra: {
+      copyFiles: [
+        { from: 'dist/index.html', to: 'dist/404.html' }
       ]
     }
   },
