@@ -1,17 +1,15 @@
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
-import { useEnvironment } from '@/src/hooks/useEnvironment';
-import { useOrganization, useUser } from '@clerk/clerk-expo';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 
 export const ProfileScreen = () => {
 
-  const { user } = useUser()
-  const { organization } = useOrganization()
+  // const { user } = useUser()
+  // const { organization } = useOrganization()
 
-  const env = useEnvironment();
+  // const env = useEnvironment();
 
   
   return (
@@ -39,7 +37,7 @@ export const ProfileScreen = () => {
         <HelloWave />
          */}
         {/* Example of displaying environment variables (remove in production) */}
-        <ThemedText>Environment: {env.envName || 'Not set'}</ThemedText>
+        {/* <ThemedText>Environment: {env.envName || 'Not set'}</ThemedText> */}
         {/* <ThemedText>API Key: {apiKey ? '****' : 'Not set'}</ThemedText>
         <ThemedText>Base URL: {baseUrl || 'Not set'}</ThemedText> */}
       </ThemedView>
