@@ -17,7 +17,7 @@ export const HomeLayout = () => {
           title: 'Home',
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="profile/index"
         options={{
           title: 'Profile',
@@ -25,7 +25,7 @@ export const HomeLayout = () => {
           headerShown: true,
           headerBackVisible: true,
         }}
-      />
+      /> */}
       <Stack.Screen
         name="post-to-board-screen"
         options={{
