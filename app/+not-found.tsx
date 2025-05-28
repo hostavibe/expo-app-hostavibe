@@ -23,7 +23,9 @@ export default function NotFoundScreen() {
       // window.location.href = `/?${searchParams.toString()}`;
       // console.log('window.location.pathname', window.location.pathname);
       // const pathname = decodeURIComponent(window.location.pathname);
-      router.push(hookPathname as any);
+      router.push({
+        pathname: hookPathname as string,
+      });
     }
   });
 
