@@ -1,11 +1,9 @@
-import { SignOutButton } from '@/src/components/SignOutButton';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 import { useEnvironment } from '@/src/hooks/useEnvironment';
-import { SignedIn, SignedOut, useOrganization, useUser } from '@clerk/clerk-expo';
-import { Link } from 'expo-router';
+import { useOrganization, useUser } from '@clerk/clerk-expo';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 
 export const ProfileScreen = () => {
@@ -19,12 +17,12 @@ export const ProfileScreen = () => {
   return (
     <View>
       <ThemedView style={styles.titleContainer}>
-        <SignedIn>
+        {/* <SignedIn>
           <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
           {organization && (
             <Text>Active Organization: {organization.name}</Text>
           )}
-          {/* <MyOrganizationsComponent /> */}
+          <MyOrganizationsComponent />
           <SignOutButton />
         </SignedIn>
         <SignedOut>
@@ -34,7 +32,7 @@ export const ProfileScreen = () => {
           <Link href="/(auth)/sign-up">
             <Text>Sign up</Text>
           </Link>
-        </SignedOut>
+        </SignedOut> */}
 
 {/* 
         <ThemedText type="title">Welcome!</ThemedText>
