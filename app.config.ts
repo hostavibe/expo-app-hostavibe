@@ -33,9 +33,9 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
     router: {
       baseUrl: '/expo-app-hostavibe',
     },
-    extra: {
-      copyFiles: [
-        { from: 'dist/index.html', to: 'dist/404.html' }
+    static: {
+      rewrites: [
+        { source: '/expo-app-hostavibe/**', destination: '/expo-app-hostavibe/index.html' }
       ]
     }
   },
