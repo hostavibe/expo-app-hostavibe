@@ -1,11 +1,13 @@
+import { MyOrganizationsComponent } from '@/src/components/MyOrganizations';
+import ParallaxScrollView from '@/src/components/ParallaxScrollView';
 import { SignOutButton } from '@/src/components/SignOutButton';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 import { useEnvironment } from '@/src/hooks/useEnvironment';
 import { SignedIn, SignedOut, useOrganization, useUser } from '@clerk/clerk-expo';
+import { Image } from 'expo-image';
 import { Link } from 'expo-router';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
 
 export const ProfileScreen = () => {
@@ -17,14 +19,27 @@ export const ProfileScreen = () => {
 
   
   return (
-    <View>
+    <ParallaxScrollView
+      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerImage={
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('@/assets/images/hosta-leaf.png')}
+            style={styles.reactLogo}
+            contentFit="contain"
+            transition={1000}
+            onError={(error) => console.error('Image loading error:', error)}
+          />
+        </View>
+      }
+      >
       <ThemedView style={styles.titleContainer}>
         <SignedIn>
           <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
           {organization && (
             <Text>Active Organization: {organization.name}</Text>
           )}
-          {/* <MyOrganizationsComponent /> */}
+          <MyOrganizationsComponent />
           <SignOutButton />
         </SignedIn>
         <SignedOut>
@@ -50,13 +65,13 @@ export const ProfileScreen = () => {
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
           Press{' '}
-          {/* <ThemedText type="defaultSemiBold">
+          <ThemedText type="defaultSemiBold">
             {Platform.select({
               ios: 'cmd + d',
               android: 'cmd + m',
               web: 'F12',
             })}
-          </ThemedText>{' '} */}
+          </ThemedText>{' '}
           to open developer tools.
         </ThemedText>
       </ThemedView>
@@ -66,7 +81,7 @@ export const ProfileScreen = () => {
           {`Tap the Explore tab to learn more about what's included in this starter app.`}
         </ThemedText>
       </ThemedView>
-    </View>
+    </ParallaxScrollView>
   );
 }
 
