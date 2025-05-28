@@ -61,7 +61,7 @@ export const UserPostImage = (props: UserPostImageProps) => {
     <Image
       source={{ uri: imageUrl }}
       style={styles.image}
-      contentFit="cover"
+      contentFit="contain"
       transition={1000}
       onError={(error) => {
         console.error('Image loading error:', error);
