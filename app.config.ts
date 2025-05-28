@@ -23,7 +23,7 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
   },
   web: {
     bundler: 'metro',
-    output: 'static',
+    output: 'single',
     // This tells the web server to serve index.html for all routes
     // This enables client-side routing to work properly
     favicon: './assets/favicon.png',
