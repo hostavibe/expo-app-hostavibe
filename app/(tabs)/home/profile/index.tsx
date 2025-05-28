@@ -1,12 +1,11 @@
 import { MyOrganizationsComponent } from '@/src/components/MyOrganizations';
-import ParallaxScrollView from '@/src/components/ParallaxScrollView';
 import { SignOutButton } from '@/src/components/SignOutButton';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
 import { useEnvironment } from '@/src/hooks/useEnvironment';
 import { SignedIn, SignedOut, useOrganization, useUser } from '@clerk/clerk-expo';
-import { Image } from 'expo-image';
 import { Link } from 'expo-router';
+import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 
 
@@ -19,19 +18,7 @@ export const ProfileScreen = () => {
 
   
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <View style={styles.imageContainer}>
-          <Image
-            source={require('@/assets/images/hosta-leaf.png')}
-            style={styles.reactLogo}
-            contentFit="contain"
-            transition={1000}
-            onError={(error) => console.error('Image loading error:', error)}
-          />
-        </View>
-      }>
+    <View>
       <ThemedView style={styles.titleContainer}>
         <SignedIn>
           <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
@@ -80,7 +67,7 @@ export const ProfileScreen = () => {
           {`Tap the Explore tab to learn more about what's included in this starter app.`}
         </ThemedText>
       </ThemedView>
-    </ParallaxScrollView>
+    </View>
   );
 }
 
