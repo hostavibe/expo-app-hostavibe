@@ -23,7 +23,7 @@ export default function NotFoundScreen() {
       // window.location.href = `/?${searchParams.toString()}`;
       // console.log('window.location.pathname', window.location.pathname);
       // const pathname = decodeURIComponent(window.location.pathname);
-      router.push(windowLocationPathname as any);
+      router.push(hookPathname as any);
     }
   });
 
