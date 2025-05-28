@@ -21,6 +21,19 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
     supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
     clerkExpoPublishableKey: process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY,
   },
+  web: {
+    bundler: 'metro',
+    output: 'static',
+    // This tells the web server to serve index.html for all routes
+    // This enables client-side routing to work properly
+    favicon: './assets/favicon.png',
+    // Add this to handle all routes
+    build: {
+      babel: {
+        include: ['@expo/vector-icons'],
+      },
+    },
+  },
 });
 
 export default AppConfig;
