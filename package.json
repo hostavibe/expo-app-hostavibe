@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "build": "expo export",
+    "build": "expo export && npm run postbuild",
+    "postbuild": "cp dist/index.html dist/404.html",
     "serve": "npx serve dist",
     "android": "expo start --android",
     "ios": "expo start --ios",

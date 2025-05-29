@@ -32,11 +32,6 @@ const AppConfig = ({ config }: ConfigContext): ExpoConfig => ({
     },
     router: {
       baseUrl: '/expo-app-hostavibe',
-    },
-    static: {
-      rewrites: [
-        { source: '/expo-app-hostavibe/**', destination: '/expo-app-hostavibe/index.html' }
-      ]
     }
   },
 });
