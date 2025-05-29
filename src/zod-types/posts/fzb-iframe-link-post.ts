@@ -1,7 +1,5 @@
 import { z } from "zod";
-import { FzbBasicPostDataSchema } from "./fzb-basic-post";
-
-export const POST_TYPE_IFRAME_LINK = "iframe-link" as const;
+import { FzbBasicPostDataSchema, POST_TYPE_IFRAME_LINK } from "./fzb-basic-post";
 
 
 export const FzbIframeLinkPostDataSchema = FzbBasicPostDataSchema.extend({

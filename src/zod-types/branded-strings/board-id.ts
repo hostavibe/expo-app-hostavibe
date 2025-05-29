@@ -9,9 +9,6 @@ export const OrgBoardIdPrefix = 'obrd_';
 export const BoardOwnerTypeSchema = z.enum(['user', 'org']);
 export type BoardOwnerType = z.infer<typeof BoardOwnerTypeSchema>;
 
-// export type BoardOwnerType = (typeof BoardOwnerType)[keyof typeof BoardOwnerType];
-
-
 // User Board ID type (starts with 'ubrd_')
 export const UserBoardIdSchema = createBrandedString(UserBoardIdPrefix);
 export type UserBoardId = z.infer<typeof UserBoardIdSchema>;
@@ -23,33 +20,52 @@ export type OrgBoardId = z.infer<typeof OrgBoardIdSchema>;
 export const BoardIdSchema = z.union([UserBoardIdSchema, OrgBoardIdSchema]);
 export type BoardId = z.infer<typeof BoardIdSchema>;
 
-type BoardIdentifiers = {
-  boardOwnerType: 'user' | 'org';
+
+export type UserBoardIdentifiers = {
+  boardOwnerType: 'user';
   boardUuid: string;
-  boardId: BoardId;
+  boardId: UserBoardId;
 }
 
-export const convertIdSearchParamToBoardIds = (localSearchParams: UnknownOutputParams): BoardIdentifiers => {
+export type OrgBoardIdentifiers = {
+  boardOwnerType: 'org';
+  boardUuid: string;
+  boardId: OrgBoardId;
+}
+
+export type BoardIdentifiers = UserBoardIdentifiers | OrgBoardIdentifiers;
+
+export const convertBoardIdStringToIdentifiers = (boardIdStr: string): BoardIdentifiers => {
+
+  const parsedBoardId = BoardIdSchema.safeParse(boardIdStr);
+  if (!parsedBoardId.success) {
+    console.log('boardIdStr', boardIdStr);
+    throw new Error(`Invalid board ID - ${boardIdStr}`);
+  }
+
+  if (parsedBoardId.data.startsWith(UserBoardIdPrefix)) {
+    return {
+      boardOwnerType: 'user',
+      boardUuid: parsedBoardId.data.substring(UserBoardIdPrefix.length),
+      boardId: boardIdStr as UserBoardId,
+    };
+  }
+
+  if (parsedBoardId.data.startsWith(OrgBoardIdPrefix)) {
+    return {
+      boardOwnerType: 'org',
+      boardUuid: parsedBoardId.data.substring(OrgBoardIdPrefix.length),
+      boardId: boardIdStr as OrgBoardId,
+    };
+  }
+
+  throw new Error(`Invalid board ID - ${boardIdStr}`);
+}
+
+export const convertIdSearchParamToBoardIdentifiers = (localSearchParams: UnknownOutputParams): BoardIdentifiers => {
   console.log('localSearchParams', localSearchParams);
   const boardId = localSearchParams.id as string;
 
-  const parsedBoardId = BoardIdSchema.safeParse(boardId);
-  if (!parsedBoardId.success) {
-    console.log('localSearchParams', localSearchParams);
-    throw new Error(`Invalid board ID - ${boardId}`);
-  }
-
-  const boardUuid = parsedBoardId.data.substring(
-    parsedBoardId.data.startsWith(UserBoardIdPrefix) 
-      ? UserBoardIdPrefix.length 
-      : OrgBoardIdPrefix.length
-  );
-
-  console.log('boardUuid', boardUuid);
-
-  return {
-    boardOwnerType: parsedBoardId.data.startsWith(UserBoardIdPrefix) ? 'user' : 'org',
-    boardUuid,
-    boardId: parsedBoardId.data,
-  };
+  const retVal = convertBoardIdStringToIdentifiers(boardId);
+  return retVal;
 }

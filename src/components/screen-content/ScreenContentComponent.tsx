@@ -1,4 +1,4 @@
-import { FzbPostId, FzbScreenId } from "@/src/zod-types/branded-strings/fb-branded-strings";
+import { FzbScreenId } from "@/src/zod-types/branded-strings/fb-branded-strings";
 import { FzbIframeLinkPostData } from "@/src/zod-types/posts/fzb-iframe-link-post";
 import { FzbImageLinkPostData } from "@/src/zod-types/posts/fzb-image-link-post";
 import { FzbPdfLinkPostData } from "@/src/zod-types/posts/fzb-pdf-link-post";
@@ -56,7 +56,6 @@ export const ScreenContentComponent = ({
   
     case SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK: {
       const screenPostData: FzbImageLinkPostData = {
-        id: `image-link-post-${screenId}` as FzbPostId,
         name: "Permanent Image",
         postType: "image-link",
         imageUrl: screenConfig.imageUrl,
@@ -72,7 +71,6 @@ export const ScreenContentComponent = ({
 
     case SCREEN_CONFIG_TYPE_SHOW_PERMANENT_PDF_LINK: {
       const screenPostData: FzbPdfLinkPostData = {
-        id: `pdf-link-post-${screenId}` as FzbPostId,
         name: "Permanent PDF",
         postType: "pdf-link",
         pdfUrl: screenConfig.pdfUrl,
@@ -87,7 +85,6 @@ export const ScreenContentComponent = ({
 
     case SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IFRAME_LINK: {
       const screenPostData: FzbIframeLinkPostData = {
-        id: `iframe-link-post-${screenId}` as FzbPostId,
         name: "Permanent Iframe",
         postType: "iframe-link",
         iframeUrl: screenConfig.iframeUrl,

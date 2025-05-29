@@ -1,4 +1,4 @@
-import { fetchUserPostById } from "@/src/api/supabase-db/user-posts";
+import { fetchMyUserPostById } from "@/src/api/supabase-db/user-posts";
 import { UserPostDetailsForId } from "@/src/api/types/user-post-details-for-id";
 import { useUserContext } from "@/src/hooks/user-context";
 import { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ export const UserPostDetailsForIdComponent = (props: UserPostDetailsForIdCompone
       }
 
       try {
-        const post = await fetchUserPostById(supabase, postId);
+        const post = await fetchMyUserPostById(supabase, postId);
         if (!post) {
           setError('Post not found');
           return;

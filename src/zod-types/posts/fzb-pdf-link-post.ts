@@ -1,8 +1,5 @@
 import { z } from "zod";
-import { FzbBasicPostDataSchema } from "./fzb-basic-post";
-
-
-export const POST_TYPE_PDF_LINK = "pdf-link" as const;
+import { FzbBasicPostDataSchema, POST_TYPE_PDF_LINK } from "./fzb-basic-post";
 
 
 export const FzbPdfLinkPostDataSchema = FzbBasicPostDataSchema.extend({

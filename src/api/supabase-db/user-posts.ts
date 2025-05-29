@@ -2,7 +2,11 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { UserPostDetailsForId, UserPostDetailsForIdSchema } from "../types/user-post-details-for-id";
 
 
-export const fetchAllUserPosts = async (supabase: SupabaseClient): Promise<UserPostDetailsForId[] | null> => {
+export const USER_POSTS_TABLE = 'user_posts';
+export const USER_POSTS_BUCKET = 'user-posts';
+
+
+export const fetchMyUserPosts = async (supabase: SupabaseClient): Promise<UserPostDetailsForId[] | null> => {
   if (!supabase) {
     console.error('No supabase client');
     return null;
@@ -10,7 +14,7 @@ export const fetchAllUserPosts = async (supabase: SupabaseClient): Promise<UserP
 
   try {
     const { data, error } = await supabase
-      .from('user_posts')
+      .from(USER_POSTS_TABLE)
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -21,6 +25,7 @@ export const fetchAllUserPosts = async (supabase: SupabaseClient): Promise<UserP
     const validatedPosts = data
       ?.map(post => UserPostDetailsForIdSchema.parse(post))
       .filter(post => post !== undefined);
+      
     return validatedPosts;
 
   } catch (err) {
@@ -30,7 +35,7 @@ export const fetchAllUserPosts = async (supabase: SupabaseClient): Promise<UserP
 }
 
 
-export const fetchUserPostById = async (supabase: SupabaseClient, id: string): Promise<UserPostDetailsForId | null> => {
+export const fetchMyUserPostById = async (supabase: SupabaseClient, id: string): Promise<UserPostDetailsForId | null> => {
   if (!supabase) {
     return null;
   }
@@ -38,7 +43,7 @@ export const fetchUserPostById = async (supabase: SupabaseClient, id: string): P
   try {
     // Fetch post details
     const { data, error: fetchError } = await supabase
-      .from('user_posts')
+      .from(USER_POSTS_TABLE)
       .select('*')
       .eq('id', id)
       .single();

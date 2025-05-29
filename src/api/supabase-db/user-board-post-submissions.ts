@@ -1,7 +1,7 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
-const BOARD_POST_SUBMISSIONS_TABLE = 'board4user_post_submissions';
+const USER_BOARD_POST_SUBMISSIONS_TABLE = 'board4user_post_submissions';
 
 
 export type UserBoardPostSubmissionItem = {
@@ -10,11 +10,6 @@ export type UserBoardPostSubmissionItem = {
   submitted_board4user_id: string;
   submitted_for_screen_id?: string;
   submitted_at: string;
-  approved_at?: string;
-  approved_by_user_id?: string;
-  rejected_at?: string;
-  rejected_reason?: string;
-  rejected_by_user_id?: string;
 }
 
 export type UserBoardPostSubmissionAdd = {
@@ -31,7 +26,7 @@ export type UserScreenPostSubmissionAdd = {
 
 export const fetchUserBoardPostSubmissions = async (supabase: SupabaseClient, boardUuid: string): Promise<UserBoardPostSubmissionItem[]> => {
   const { data, error } = await supabase
-    .from(BOARD_POST_SUBMISSIONS_TABLE)
+    .from(USER_BOARD_POST_SUBMISSIONS_TABLE)
     .select('*')
     .eq('submitted_board4user_id', boardUuid)
     .order('submitted_at', { ascending: false });
@@ -47,7 +42,7 @@ export const fetchUserBoardPostSubmissions = async (supabase: SupabaseClient, bo
 export const addUserBoardPostSubmission = async (supabase: SupabaseClient, boardPostSubmission: UserBoardPostSubmissionAdd) => {
 
   const { data, error } = await supabase
-    .from(BOARD_POST_SUBMISSIONS_TABLE)
+    .from(USER_BOARD_POST_SUBMISSIONS_TABLE)
     .insert(boardPostSubmission);
 
   if (error) {
@@ -61,7 +56,7 @@ export const addUserBoardPostSubmission = async (supabase: SupabaseClient, board
 export const addUserScreenPostSubmission = async (supabase: SupabaseClient, screenPostSubmission: UserScreenPostSubmissionAdd) => {
 
   const { data, error } = await supabase
-    .from(BOARD_POST_SUBMISSIONS_TABLE)
+    .from(USER_BOARD_POST_SUBMISSIONS_TABLE)
     .insert(screenPostSubmission);
 
   if (error) {
@@ -75,7 +70,7 @@ export const approveBoardPostSubmission = async (supabase: SupabaseClient, submi
   console.log("APPROVING SUBMISSION", submissionId, userId);
   
   const { data, error } = await supabase
-    .from(BOARD_POST_SUBMISSIONS_TABLE)
+    .from(USER_BOARD_POST_SUBMISSIONS_TABLE)
     .update({
       approved_at: new Date().toISOString(),
       approved_by_user_id: userId,
@@ -99,7 +94,7 @@ export const rejectBoardPostSubmission = async (supabase: SupabaseClient, submis
   const now = new Date().toISOString();
   
   const { data, error } = await supabase
-    .from(BOARD_POST_SUBMISSIONS_TABLE)
+    .from(USER_BOARD_POST_SUBMISSIONS_TABLE)
     .update({
       rejected_at: now,
       rejected_reason: reason,

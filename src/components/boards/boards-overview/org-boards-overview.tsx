@@ -2,7 +2,7 @@ import { fetchOrgBoardConfigurations } from '@/src/api/supabase-db/boards4orgs-c
 import { ThemedText } from '@/src/components/ThemedText'
 import { ThemedView } from '@/src/components/ThemedView'
 import { useUserContext } from '@/src/hooks/user-context'
-import { OrgBoardSetupDbRowFull, OrgBoardSetupDbRowFullSchema } from '@/src/zod-types/boards/org-board-setup-db-row'
+import { OrgBoardSetupDbRowFull } from '@/src/zod-types/boards/org-board-setup-db-row'
 import { OrgBoardIdPrefix } from '@/src/zod-types/branded-strings/board-id'
 import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
@@ -34,13 +34,14 @@ export const OrgBoardsOverviewScreen = ({ orgId, orgName, userId }: OrgBoardsOve
       try {
         const rawData = await fetchOrgBoardConfigurations(supabase, orgId);
 
-        const parsedData = rawData
-          .map((item) => OrgBoardSetupDbRowFullSchema.safeParse(item))
-          .filter((result) => result.success)
-          .map((result) => result.data);
+        // const parsedData = rawData
+        //   .map((item) => OrgBoardSetupDbRowFullSchema.safeParse(item))
+        //   .filter((result) => result.success)
+        //   .map((result) => result.data);
 
-        setConfigurations(parsedData || []);
+        setConfigurations(rawData || []);
         setIsLoading(false);
+
       } catch (err) {
         console.error('Error fetching board configurations:', err);
         setError('Failed to load board configurations');
@@ -78,7 +79,6 @@ export const OrgBoardsOverviewScreen = ({ orgId, orgName, userId }: OrgBoardsOve
 
   const handleLaunch = (id: string) => {
     console.log('launch', id);
-    // router.push(`/boards/board_${id}/play`);
     
     const boardId = `${OrgBoardIdPrefix}${id}`;
     router.push({
@@ -131,7 +131,7 @@ export const OrgBoardsOverviewScreen = ({ orgId, orgName, userId }: OrgBoardsOve
             ListEmptyComponent={
               <View style={styles.emptyContainer}>
                 <ThemedText style={styles.emptyText}>
-                  No board configurations found
+                  No board configurations found for {orgName}
                 </ThemedText>
               </View>
             }

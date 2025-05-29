@@ -6,12 +6,14 @@ export const GUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0
 
 // Base branded string type
 export const createBrandedString = <T extends string>(prefix: T) => {
-  return z.string().refine(
-    (val) => val.startsWith(prefix),
-    {
-      message: `String must start with "${prefix}"`,
-    }
-  ).brand<T>();
+  // return z.string().refine(
+  //   (val) => val.startsWith(prefix),
+  //   {
+  //     message: `String must start with "${prefix}"`,
+  //   }
+  // ).brand<T>();
+
+  return z.string().startsWith(prefix).brand<T>();
 };
 
 // User ID type (starts with 'user_')

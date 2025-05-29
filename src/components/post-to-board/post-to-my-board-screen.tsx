@@ -1,6 +1,5 @@
-import { UserBoardPostSubmissionAdd, addUserBoardPostSubmission } from "@/src/api/supabase-db/board-post-submissions";
-import { fetchUserPostById } from "@/src/api/supabase-db/user-posts";
-import { UserPostDetailsForId, UserPostDetailsForIdSchema } from "@/src/api/types/user-post-details-for-id";
+import { fetchMyUserPostById } from "@/src/api/supabase-db/user-posts";
+import { UserPostDetailsForId } from "@/src/api/types/user-post-details-for-id";
 import { UserPostReadonlyView } from "@/src/components/posts/user-post-readonly-view";
 import { useUserContext } from "@/src/hooks/user-context";
 import { useLocalSearchParams, useNavigation } from "expo-router";
@@ -30,28 +29,28 @@ export const PostToMyBoardScreen = () => {
     });
   }, [navigation]);
 
-  const doPost = async () => {
-    if (!supabase || !postId || !boardId) {
-      return;
-    }
+  // const doPost = async () => {
+  //   if (!supabase || !postId || !boardId) {
+  //     return;
+  //   }
 
-    console.log('doPost', postId, boardId);
-    const boardPostSubmission: UserBoardPostSubmissionAdd = {
-      submitted_user_post_id: postId as string,
-      submitted_board4user_id: boardId as string,
-    }
+  //   console.log('doPost', postId, boardId);
+  //   const boardPostSubmission: UserBoardPostSubmissionAdd = {
+  //     submitted_user_post_id: postId as string,
+  //     submitted_board4user_id: boardId as string,
+  //   }
 
-    const result = await addUserBoardPostSubmission(supabase, boardPostSubmission);
-    console.log('result', result);    
+  //   const result = await addUserBoardPostSubmission(supabase, boardPostSubmission);
+  //   console.log('result', result);    
 
-    const postResult = UserPostDetailsForIdSchema.safeParse(result);
-    if (!postResult.success) {
-      console.error('Invalid post', postResult.error);
-      return;
-    }
+  //   const postResult = UserPostDetailsForIdSchema.safeParse(result);
+  //   if (!postResult.success) {
+  //     console.error('Invalid post', postResult.error);
+  //     return;
+  //   }
 
-    setPost(postResult.data);
-  }
+  //   setPost(postResult.data);
+  // }
 
   useEffect(() => {
     console.log('fetchPost', postId, boardId);
@@ -61,7 +60,7 @@ export const PostToMyBoardScreen = () => {
         return;
       }
 
-      const post = await fetchUserPostById(supabase, postId as string);
+      const post = await fetchMyUserPostById(supabase, postId as string);
       if (!post) {
         // setError('Post not found');
         console.error('Post not found');

@@ -1,8 +1,5 @@
 import { z } from "zod";
-import { FzbBasicPostDataSchema } from "./fzb-basic-post";
-
-
-export const POST_TYPE_TEXT_CONTENT = "text-content" as const;
+import { FzbBasicPostDataSchema, POST_TYPE_TEXT_CONTENT } from "./fzb-basic-post";
 
 
 export const FzbTextContentPostDataSchema = FzbBasicPostDataSchema.extend({

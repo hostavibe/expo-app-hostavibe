@@ -3,7 +3,7 @@ import { OrganizationMembershipResource } from "@clerk/types";
 import React, { createContext, useContext } from "react";
 
 
-type UserAndOrgInfo = {
+export type UserAndOrgInfo = {
   userAndOrgType: 'none';
 } | {
   userAndOrgType: 'user-only';

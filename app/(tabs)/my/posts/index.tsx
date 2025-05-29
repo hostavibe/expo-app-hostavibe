@@ -1,10 +1,11 @@
-import { fetchAllUserPosts } from '@/src/api/supabase-db/user-posts';
+import { deleteUserPost } from '@/src/api/supabase-db/meta/manageUserPost';
+import { fetchMyUserPosts } from '@/src/api/supabase-db/user-posts';
 import { UserPostDetailsForId } from '@/src/api/types/user-post-details-for-id';
 import { ThemedText } from '@/src/components/ThemedText';
 import { useUserContext } from '@/src/hooks/user-context';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 
 export const MyPostsScreen = () => {
@@ -17,7 +18,7 @@ export const MyPostsScreen = () => {
     const fetchUserPosts = async () => {
 
       try {
-        const posts = await fetchAllUserPosts(supabase);
+        const posts = await fetchMyUserPosts(supabase);
         if (posts) {
           setUserPosts(posts);
         }
@@ -30,15 +31,55 @@ export const MyPostsScreen = () => {
   }, [supabase, isUserLoaded]);
   
 
+  const handleDelete = async (postId: string) => {
+    console.log('Deleting post:', postId);
+    const isConfirmed = Platform.OS === 'web' 
+      ? window.confirm('Are you sure you want to delete this post?')
+      : await new Promise<boolean>((resolve) => {
+          Alert.alert(
+            'Delete Post',
+            'Are you sure you want to delete this post?',
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+                onPress: () => resolve(false),
+              },
+              {
+                text: 'Delete',
+                style: 'destructive',
+                onPress: () => resolve(true),
+              },
+            ],
+            { cancelable: true }
+          );
+        });
+
+    if (isConfirmed) {
+      try {
+        await deleteUserPost(supabase, postId);
+
+        setUserPosts(posts => posts.filter(post => post.id !== postId));
+      } catch (err) {
+        console.error('Error deleting post:', err);
+        if (Platform.OS === 'web') {
+          window.alert('Failed to delete post');
+        } else {
+          Alert.alert('Error', 'Failed to delete post');
+        }
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Pressable
           style={styles.addButton}
-          onPress={() => router.push('/my/posts/new')}
+          onPress={() => router.push('/(tabs)/my/posts/new2')}
           // disabled={uploading}
         >
-          <ThemedText style={styles.addButtonText}>New Post</ThemedText>
+          <ThemedText style={styles.addButtonText}>New Post2</ThemedText>
         </Pressable>
       </View>
 
@@ -55,10 +96,21 @@ export const MyPostsScreen = () => {
             })}
             style={styles.configItem}
           >
-            <ThemedText type="title">{item.configuration_json}</ThemedText>
-            <ThemedText style={styles.date}>
-              Created: {new Date(item.created_at).toLocaleDateString()}
-            </ThemedText>
+            <View style={styles.configItemContent}>
+              <ThemedText type="title">{item.configuration_json}</ThemedText>
+              <ThemedText style={styles.date}>
+                Created: {new Date(item.created_at).toLocaleDateString()}
+              </ThemedText>
+            </View>
+            <Pressable
+              onPress={(e) => {
+                e.stopPropagation();
+                handleDelete(item.id);
+              }}
+              style={styles.deleteButton}
+            >
+              <ThemedText style={styles.deleteButtonText}>Delete</ThemedText>
+            </Pressable>
           </Pressable>
         )}
         ListEmptyComponent={
@@ -88,12 +140,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
+  configItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   configItem: {
     padding: 16,
     marginBottom: 12,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#ccc',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  configItemContent: {
+    flex: 1,
   },
   addButton: {
     backgroundColor: '#4CAF50',
@@ -135,5 +198,16 @@ const styles = StyleSheet.create({
   emptyText: {
     textAlign: 'center',
     marginTop: 20,
+  },
+  deleteButton: {
+    backgroundColor: '#ff4444',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+    marginLeft: 12,
+  },
+  deleteButtonText: {
+    color: 'white',
+    fontSize: 14,
   },
 }); 

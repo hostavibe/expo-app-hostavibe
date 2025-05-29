@@ -5,8 +5,8 @@ export const FzbBoardIdSchema = z.string().brand('FzbBoardId');
 export type FzbBoardId = z.infer<typeof FzbBoardIdSchema>;
 
 
-export const FzbPostIdSchema = z.string().brand('FzbPostId');
-export type FzbPostId = z.infer<typeof FzbPostIdSchema>;
+// export const FzbPostIdSchema = z.string().brand('FzbPostId');
+// export type FzbPostId = z.infer<typeof FzbPostIdSchema>;
 
 
 export const FzbScreenConfigTypeSchema = z.string().brand('FzbScreenConfigType');

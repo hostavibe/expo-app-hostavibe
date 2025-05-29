@@ -1,4 +1,4 @@
-import { fetchUserBoardPostSubmissions } from "@/src/api/supabase-db/board-post-submissions";
+import { fetchUserBoardPostSubmissions } from "@/src/api/supabase-db/user-board-post-submissions";
 import { useUserBoardsScreenContext } from "@/src/components/boards/boards-overview/user-boards-screen-context";
 import { ThemedText } from "@/src/components/ThemedText";
 import { useUserContext } from "@/src/hooks/user-context";

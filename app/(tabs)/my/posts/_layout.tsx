@@ -20,7 +20,7 @@ const SaveContext = createContext<SaveContextType>({
 export const useSaveContext = () => useContext(SaveContext);
 
 export const MyPostsLayout = () => {
-  // const [onSave, setOnSave] = useState<() => void>(() => {});
+  
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   const onSave = () => {
@@ -35,13 +35,13 @@ export const MyPostsLayout = () => {
           title: 'My Posts',
         }}
       >
-        {/* <Stack.Screen
+        <Stack.Screen
           name="index"
           options={{
             title: 'All My Posts',
             headerShown: true,
           }}
-        /> */}
+        />
         <Stack.Screen
           name="[id]"
           options={{

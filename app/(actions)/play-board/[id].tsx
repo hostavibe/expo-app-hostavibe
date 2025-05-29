@@ -5,7 +5,7 @@ import { ThemedText } from "@/src/components/ThemedText";
 import { useUserContext } from "@/src/hooks/user-context";
 import { OrgBoardSetupDbRowFullSchema } from "@/src/zod-types/boards/org-board-setup-db-row";
 import { UserBoardSetupDbRowFullSchema } from "@/src/zod-types/boards/user-board-setup-db-row";
-import { convertIdSearchParamToBoardIds } from "@/src/zod-types/branded-strings/board-id";
+import { convertIdSearchParamToBoardIdentifiers } from "@/src/zod-types/branded-strings/board-id";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 
@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 export const PlayBoardScreen = () => {
   const localSearchParams = useLocalSearchParams();
   
-  const boardIdentifiers = convertIdSearchParamToBoardIds(localSearchParams);
+  const boardIdentifiers = convertIdSearchParamToBoardIdentifiers(localSearchParams);
   const { boardOwnerType, boardUuid, boardId } = boardIdentifiers;
 
   const { supabase } = useUserContext();

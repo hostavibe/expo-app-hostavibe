@@ -1,10 +1,13 @@
-import { UserBoardSetupDbRow, UserBoardSetupDbRowNew, UserBoardSetupDbRowSave } from "@/src/zod-types/boards/user-board-setup-db-row";
+import { UserBoardSetupDbRow, UserBoardSetupDbRowFull, UserBoardSetupDbRowFullSchema, UserBoardSetupDbRowNew, UserBoardSetupDbRowSave } from "@/src/zod-types/boards/user-board-setup-db-row";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
-export const fetchUserBoardConfigurations = async (supabase: SupabaseClient) => {
+const BOARDS4USERS_TABLE = 'boards4users';
+
+
+export const fetchUserBoardConfigurations = async (supabase: SupabaseClient): Promise<UserBoardSetupDbRowFull[]> => {
   const { data, error } = await supabase
-    .from('boards4users')
+    .from(BOARDS4USERS_TABLE)
     .select('*')
     .order('created_at', { ascending: false });
 
@@ -12,14 +15,20 @@ export const fetchUserBoardConfigurations = async (supabase: SupabaseClient) => 
     throw error;
   }
 
-  return data;
+  if (!data) {
+    return [];
+  }
+
+  const parsedData = UserBoardSetupDbRowFullSchema.array().parse(data);
+
+  return parsedData;
 };
 
 
-export const fetchUserBoardConfigurationById = async (supabase: SupabaseClient, boardUuid: string) => {
+export const fetchUserBoardConfigurationById = async (supabase: SupabaseClient, boardUuid: string): Promise<UserBoardSetupDbRowFull | null> => {
 
   const { data, error } = await supabase
-    .from('boards4users')
+    .from(BOARDS4USERS_TABLE)
     .select('*')
     .eq('id', boardUuid)
     .single();
@@ -28,7 +37,13 @@ export const fetchUserBoardConfigurationById = async (supabase: SupabaseClient, 
     throw error;
   }
 
-  return data;
+  if (!data) {
+    return null;
+  }
+
+  const parsedData = UserBoardSetupDbRowFullSchema.parse(data);
+
+  return parsedData;
 };
 
 
@@ -42,7 +57,7 @@ export const addUserBoardConfiguration = async (supabase: SupabaseClient, boardC
   }
 
   const { data, error } = await supabase
-    .from('boards4users')
+    .from(BOARDS4USERS_TABLE)
     .insert(newBoardConfig);
 
   if (error) {
@@ -64,7 +79,7 @@ export const saveUserBoardConfiguration = async (supabase: SupabaseClient, board
   console.log('updateRecord', updateRecord);
 
   const { data, error } = await supabase
-    .from('boards4users')
+    .from(BOARDS4USERS_TABLE)
     .update(updateRecord)
     .eq('id', updateRecord.id);
 

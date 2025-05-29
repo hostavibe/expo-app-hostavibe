@@ -167,10 +167,6 @@ export const BoardSetupScreen = () => {
   const boardName = currentBoardSetup?.name;
   const boardDescription = currentBoardSetup?.description;
 
-  // useEffect(() => {
-  //   setBoardIdentity(boardUuid, 'user');
-  // }, [boardUuid, setBoardIdentity]);
-
   
   if (isLoading || !currentBoardSetup) {
     return (

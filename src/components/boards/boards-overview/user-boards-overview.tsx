@@ -129,7 +129,7 @@ export const UserBoardsOverviewScreen = ({ userId }: UserBoardsOverviewScreenPro
             ListEmptyComponent={
               <View style={styles.emptyContainer}>
                 <ThemedText style={styles.emptyText}>
-                  No board configurations found
+                  No user board configurations found
                 </ThemedText>
               </View>
             }

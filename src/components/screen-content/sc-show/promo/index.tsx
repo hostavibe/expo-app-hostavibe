@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+
 export const ScreenContentPromo = () => {
   return (
     <View style={styles.container}>

@@ -1,6 +1,6 @@
 import { UserBoardsScreenContextProvider } from '@/src/components/boards/boards-overview/user-boards-screen-context';
 import { BoardsScreenHeader } from '@/src/components/boards/boards-screen-header';
-import { convertIdSearchParamToBoardIds } from '@/src/zod-types/branded-strings/board-id';
+import { convertIdSearchParamToBoardIdentifiers } from '@/src/zod-types/branded-strings/board-id';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 
@@ -8,7 +8,7 @@ import React from 'react';
 export const MyBoardDetailsLayout = () => {
 
   const localSearchParams = useLocalSearchParams();
-  const { boardUuid } = convertIdSearchParamToBoardIds(localSearchParams);
+  const { boardUuid } = convertIdSearchParamToBoardIdentifiers(localSearchParams);
 
   return (
     <UserBoardsScreenContextProvider

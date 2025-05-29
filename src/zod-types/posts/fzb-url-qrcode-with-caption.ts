@@ -1,8 +1,5 @@
 import { z } from "zod";
-import { FzbBasicPostDataSchema } from "./fzb-basic-post";
-
-
-export const POST_TYPE_URL_QRCODE_WITH_CAPTION = "url-qrcode-with-caption" as const;
+import { FzbBasicPostDataSchema, POST_TYPE_URL_QRCODE_WITH_CAPTION } from "./fzb-basic-post";
 
 
 export const FzbUrlQrcodeWithCaptionPostDataSchema = FzbBasicPostDataSchema.extend({

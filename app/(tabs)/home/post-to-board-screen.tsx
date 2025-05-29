@@ -1,12 +1,16 @@
-import { fetchUserPostById } from "@/src/api/supabase-db/user-posts";
+import { autoPostToBoard } from "@/src/api/supabase-db/meta/autoPost";
+import { canIPostToBoardWithoutRequiringApproval } from "@/src/api/supabase-db/meta/bizAuth";
+import { submitPostForReview } from "@/src/api/supabase-db/meta/submitPost";
+import { fetchMyUserPostById } from "@/src/api/supabase-db/user-posts";
 import { UserPostDetailsForId } from "@/src/api/types/user-post-details-for-id";
 import { UserPostReadonlyView } from "@/src/components/posts/user-post-readonly-view";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
 import { useUserContext } from "@/src/hooks/user-context";
+import { BoardIdentifiers, convertBoardIdStringToIdentifiers } from "@/src/zod-types/branded-strings/board-id";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useLayoutEffect, useState } from "react";
-import { Button, StyleSheet } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 
 
 export const PostToBoardScreen = () => {
@@ -14,31 +18,76 @@ export const PostToBoardScreen = () => {
     postId?: string;
     boardId?: string;
   }>();
+
   const { supabase } = useUserContext();
   const [post, setPost] = useState<UserPostDetailsForId | null>(null);
   const navigation = useNavigation();
 
+  const [validBoardIdentifiers, setValidBoardIdentifiers] = useState<BoardIdentifiers | null>(null);
+  const [autopostAllowed, setAutopostAllowed] = useState<boolean>(false);
+
+
+  useEffect(() => {
+
+    const fetchBoardConfig = async () => {
+      if (!supabase || !boardId) {
+        return;
+      }
+
+      const boardIdentifiers = convertBoardIdStringToIdentifiers(boardId);
+      setValidBoardIdentifiers(boardIdentifiers);
+
+      const ok = await canIPostToBoardWithoutRequiringApproval(supabase, boardIdentifiers);
+      setAutopostAllowed(ok);
+    }
+
+    fetchBoardConfig();
+  }, [supabase, boardId]);
+
   useLayoutEffect(() => {
-    const SubmitButton = () => {
+
+    const uploadTitle = autopostAllowed ? 'Post' : 'Submit';
+
+    const doUploadAction = async () => {
+      if (!validBoardIdentifiers || !postId) {
+        console.error('doUploadAction: Invalid board identifiers or post id');
+        return;
+      }
+
+      if (autopostAllowed) {
+        await autoPostToBoard(supabase, validBoardIdentifiers, postId);
+      } else {
+        await submitPostForReview(supabase, validBoardIdentifiers, postId);
+      }
+    }
+
+    const ScanAndPostHeaderSection = () => {
       return (
-        <Button 
-          title="Scan Board" 
-          onPress={() => router.push({
-            pathname: '/(tabs)/home/scan-for-board-id-screen',
-            params: { 
-              // boardId,
-              postId,
-             }
-          })} 
-        />
+        <View style={styles.headerRightContainer}>
+          <Button 
+            title={uploadTitle} 
+            disabled={!postId || !validBoardIdentifiers}
+            onPress={doUploadAction} 
+          />
+          <Button 
+            title="Scan Board" 
+            onPress={() => router.push({
+              pathname: '/(tabs)/home/scan-for-board-id-screen',
+              params: { 
+                // boardId,
+                postId,
+               }
+            })} 
+          />
+        </View>
       );
     };
 
     navigation.setOptions({
       title: 'Post to Board',
-      headerRight: SubmitButton,
+      headerRight: ScanAndPostHeaderSection,
     });
-  }, [navigation]);
+  }, [supabase, navigation, postId, boardId, autopostAllowed, validBoardIdentifiers]);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -47,7 +96,7 @@ export const PostToBoardScreen = () => {
       }
 
       console.log("fetching post", postId);
-      const post = await fetchUserPostById(supabase, postId as string);
+      const post = await fetchMyUserPostById(supabase, postId as string);
       if (!post) {
         console.error('Post not found');
         return;
@@ -59,6 +108,7 @@ export const PostToBoardScreen = () => {
 
     fetchPost();
   }, [supabase, postId]);
+
 
   return (
     <ThemedView style={styles.container}>
@@ -87,6 +137,10 @@ export const PostToBoardScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  headerRightContainer: {
+    flexDirection: 'row',
+    gap: 10,
+  },
   container: {
     flex: 1,
     padding: 20,
