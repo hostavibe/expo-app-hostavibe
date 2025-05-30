@@ -1,5 +1,5 @@
 import { POST_TYPE_IMAGE_LINK } from "@/src/zod-types/posts/fzb-basic-post";
-import { FzbPostData } from "@/src/zod-types/posts/fzb-post";
+import { FzbImageLinkPostData } from "@/src/zod-types/posts/fzb-image-link-post";
 import { getContentType } from "@/utils/content-type";
 import { FileOptions } from "@supabase/storage-js";
 import { SupabaseClient } from "@supabase/supabase-js";
@@ -59,8 +59,8 @@ export const uploadUserImagePost = async (
     .getPublicUrl(uploadImageContentPath);
 
   const imageUrl = publicUrl.data.publicUrl;
-
-  const postConfiguration: FzbPostData = {
+  
+  const postConfiguration: FzbImageLinkPostData = {
     postType: POST_TYPE_IMAGE_LINK,
     name: caption,
     imageUrl,

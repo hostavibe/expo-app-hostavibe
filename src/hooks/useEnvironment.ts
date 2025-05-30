@@ -21,6 +21,5 @@ export const useEnvironment = (): Environment => {
     supabaseAnonKey,
   } as Environment;
 
-  
   return envVariables;
 };

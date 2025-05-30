@@ -1,7 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
+import { USER_BOARD_POST_SUBMISSIONS_TABLE } from "./table-names";
 
-
-const USER_BOARD_POST_SUBMISSIONS_TABLE = 'board4user_post_submissions';
 
 
 export type UserBoardPostSubmissionItem = {
@@ -39,7 +38,10 @@ export const fetchUserBoardPostSubmissions = async (supabase: SupabaseClient, bo
 };
 
 
-export const addUserBoardPostSubmission = async (supabase: SupabaseClient, boardPostSubmission: UserBoardPostSubmissionAdd) => {
+export const addUserBoardPostSubmission = async (
+  supabase: SupabaseClient,
+  boardPostSubmission: UserBoardPostSubmissionAdd,
+) => {
 
   const { data, error } = await supabase
     .from(USER_BOARD_POST_SUBMISSIONS_TABLE)

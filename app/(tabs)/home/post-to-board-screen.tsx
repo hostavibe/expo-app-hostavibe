@@ -8,6 +8,7 @@ import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
 import { useUserContext } from "@/src/hooks/user-context";
 import { BoardIdentifiers, convertBoardIdStringToIdentifiers } from "@/src/zod-types/branded-strings/board-id";
+import { useUser } from "@clerk/clerk-expo";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Button, StyleSheet, View } from "react-native";
@@ -20,6 +21,7 @@ export const PostToBoardScreen = () => {
   }>();
 
   const { supabase } = useUserContext();
+  const { user } = useUser();
   const [post, setPost] = useState<UserPostDetailsForId | null>(null);
   const navigation = useNavigation();
 
@@ -54,10 +56,18 @@ export const PostToBoardScreen = () => {
         return;
       }
 
+      if (!user) {
+        console.error('doUploadAction: User not found');
+        return;
+      }
+
+      const timeToExpirationInSeconds = 60 * 60 * 24 * 7; // 7 days
+      const userId = user.id;
+
       if (autopostAllowed) {
         await autoPostToBoard(supabase, validBoardIdentifiers, postId);
       } else {
-        await submitPostForReview(supabase, validBoardIdentifiers, postId);
+        await submitPostForReview(supabase, validBoardIdentifiers, postId, userId, timeToExpirationInSeconds);
       }
     }
 
@@ -87,7 +97,7 @@ export const PostToBoardScreen = () => {
       title: 'Post to Board',
       headerRight: ScanAndPostHeaderSection,
     });
-  }, [supabase, navigation, postId, boardId, autopostAllowed, validBoardIdentifiers]);
+  }, [supabase, user, navigation, postId, boardId, autopostAllowed, validBoardIdentifiers]);
 
   useEffect(() => {
     const fetchPost = async () => {
